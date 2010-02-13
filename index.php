@@ -80,8 +80,8 @@ if(getenv('APP_ENV') == 'local') {
         <ul class="nav" id="urlnav">
             <li class="top"><a href='#top' title="Top">Top</a></li>
             <li class="bottom"><a href='#bottom' title="Bottom">Bottom</a></li>
-            <li class="clear"><a href='#' title="Clear Selection">Clear Selection</a></li>
-            <li class="permalink"><a href='/' title="Permalink">Permalink</a></li>
+            <li class="clear"><a href='#none' title="Clear Selection">Clear Selection</a></li>
+            <li class="permalink"><a href='#' title="Permalink">Permalink</a></li>
         </ul>
 <?
 	} else {
