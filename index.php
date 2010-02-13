@@ -1,5 +1,9 @@
-<?
+<?php
+
+require_once('functions.php');
+
 $title = "#Rest on Freenode";
+$subtitle = "";
 
 if(getenv('APP_ENV') == 'local') {
     $logdir = dirname(__FILE__)."/sample-logs";
@@ -10,11 +14,17 @@ if(getenv('APP_ENV') == 'local') {
     $baseurl = "http://rest.hackyhack.net";
     $logprefix = "rest";
 }
+if(isset($_REQUEST['date'])) {
+    $logdate = $_REQUEST['date'];
+    $filename = $logdir.'/'.$logprefix.'.log.'.$logdate;
+    $lines = file_exists($filename) ? file($filename) : null;
+    $subtitle = " - ".date('D, M jS Y ',strtotime($logdate));
+}
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
-        <title><?=$title?></title>
+        <title><?=$title.$subtitle?></title>
         <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" />
         <script type="text/javascript" src="/js/jquery-1.4.min.js"></script>
         <script type="text/javascript" src="/js/jquery.plugins.js"></script>
@@ -22,18 +32,30 @@ if(getenv('APP_ENV') == 'local') {
     </head>
     <body><a name="top"></a><div class="wrapper">
 <?
-    if(isset($_REQUEST['date'])) {
-        $logdate = $_REQUEST['date'];
-        $filename = $logdir.'/'.$logprefix.'.log.'.$logdate;
-        $lines = file_exists($filename) ? file($filename) : null;
-    }
-	if(isset($_REQUEST['date']) && count($lines)) { ?>
+	if(isset($_REQUEST['date']) && count($lines)) { 
+		$files = array_slice(scandir($logdir),2);
+		foreach($files as $i => $file) {
+            if($file == $logprefix.'.log.'.$logdate) {
+                $prev = $i > 0 ? substr($files[$i-1], strlen($logprefix)+5) : '';
+                $next = $i < count($files)-1 ? substr($files[$i+1], strlen($logprefix)+5) : '';
+                break;
+            }
+        }
+    ?>
         <div class="hdr">
-            <h1><?=$title?> - <?=$logdate?></h1>
+            <h1><?=$title?> <span class="date"><?=date('D, M jS Y ',strtotime($logdate))?></span></h1>
             <ul class="nav">
-                <!-- <li class="prev"><a href='/'>prev</a></li> -->
                 <li class="index"><a href='/'>index</a></li>
-                <!-- <li class="next"><a href='/'>next</a></li> -->
+            <? if($prev) { ?>
+                <li class="prev"><a href='<?=$baseurl?>/<?=$prev?>.html'>prev</a></li>
+            <? } else { ?>
+                <li class="prev"><span>prev</span></li>
+            <? } ?>
+            <? if($next) { ?>
+                <li class="next"><a href='<?=$baseurl?>/<?=$next?>.html'>next</a></li>
+            <? } else { ?>
+                <li class="next"><span>next</span></li>
+            <? } ?>
             </ul>
         </div>
         <ul class="lines">
@@ -44,10 +66,13 @@ if(getenv('APP_ENV') == 'local') {
             $line = trim($line,"\r\n");
             $line_classes = array();
             
+            $line = htmlspecialchars($line);
+            
             if(preg_match("/^Action: /",$line)) {
                 $line = preg_replace("/^Action: /","",$line);
                 $line_classes[] = 'action';
-            } else if(preg_match("/^Nick change: /",$line)) {
+            }
+            if(preg_match("/^Nick change: /",$line)) {
                 $line_classes[] = 'nickchange';
             } else if(preg_match("/ joined /",$line)) {
                 $line_classes[] = 'join';
@@ -61,9 +86,9 @@ if(getenv('APP_ENV') == 'local') {
             } else if(preg_match("/left irc: Read error: /",$line)) {
                 $line_classes[] = 'left';
                 $line_classes[] = 'error';
+            } else {
+                $line = LinkifyText($line);
             }
-            
-            $line = htmlspecialchars($line);
             
             $line = preg_replace("/^\[([\d]{2}):([\d]{2})\](.*)/", "<a href='#l$i' class='ts'>[\\1:\\2]</a><span class='t'>\\3</span>", $line);
             
@@ -96,4 +121,3 @@ if(getenv('APP_ENV') == 'local') {
 ?>
     </div><a name="bottom"></a></body>
 </html>
-

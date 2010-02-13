@@ -7,6 +7,7 @@ html, body { height: 100%; border-bottom: 1px solid transparent; }
 ul.nav { float: left; margin: 0; list-style: none; }
 ul.nav li { float: left; list-style: none; }
 ul.nav li a, ul.nav li span { float: left; padding: 0 1em; font-size: 1.3em; text-decoration: none; }
+ul.nav li span { color: #999; }
 ul.nav li a:hover { text-decoration: underline; }
 
 #urlnav { position: fixed; top: 9px; right: 9px; float: right; padding: 0; margin: 0; }
@@ -19,23 +20,24 @@ ul.nav li a:hover { text-decoration: underline; }
 #urlnav li.clear a { background-image: url(/i/150.png); }
 #urlnav li.permalink a { background-image: url(/i/089.png); }
 
-.wrapper { padding: 20px; }
+.wrapper { padding: 15px 20px; }
 
 .hdr { float: left; }
-.hdr h1 { float: left; }
+.hdr h1 { float: left; margin-bottom: 10px; }
 .hdr a.back { float: left; }
-.hdr ul.nav { margin-left: 20px; }
+.hdr ul.nav { margin: 12px 0 0 20px; }
+.hdr h1 span.date { font-size: 0.5em; margin-left: 20px; }
 
-ul.lines { clear: both; margin: 0 30px 20px 20px; }
-ul.lines li { list-style: none; font-family: "Courier New",monospace; line-height: 1.6em; font-size: 1.1em; clear: left; background: #eee; }
+ul.lines { clear: both; margin: 0 30px 20px 0; border: 3px solid #aaa; }
+ul.lines li { list-style: none; font-family: "Courier New",monospace; line-height: 1.6em; font-size: 1.1em; clear: left; background: #eee;}
 ul.lines li:hover span.t, ul.lines li.hover span.t { background: #efe; }
 ul.lines li.action { color:#9C009C; }
 ul.lines li.nick, ul.lines li.joined, ul.lines li.mode { color:#009300; }
 ul.lines li.left { color:#0000FC; }
 
-ul.lines li.selected span.t { background: #cfc; }
-ul.lines li.selected a.ts {  background: #ddd; color: #555; }
+ul.lines li.selected span.t { background: #cfc; border-color: #9d9}
+ul.lines li.selected a.ts {  background: #ddd; color: #555; border-bottom: 1px solid #ddd; }
 
 ul.lines li a.ts { text-decoration: none; background: #eee; float: left; color: #999; }
 ul.lines li a.ts:hover { background: #ccc; color: #555; }
-ul.lines li span.t { margin-left: 4.25em; border-left: 3px solid #ddd; padding: 0 0.2em; display: block; background: #fff; }
+ul.lines li span.t { margin-left: 4.25em; border-left: 3px solid #eee; border-bottom: 1px solid #eee; padding: 0.2em; line-height: 1.2em; display: block; background: #fff; }
