@@ -9,6 +9,16 @@ ul.nav li { float: left; list-style: none; }
 ul.nav li a, ul.nav li span { float: left; padding: 0 1em; font-size: 1.3em; text-decoration: none; }
 ul.nav li a:hover { text-decoration: underline; }
 
+#urlnav { position: fixed; top: 9px; right: 9px; float: right; padding: 0; margin: 0; }
+#urlnav li { clear: both; overflow: hidden; padding: 0; margin: 0;  }
+#urlnav li a { background: transparent url(/i/089.png) no-repeat center center; overflow: hidden; width: 32px; height: 32px; padding: 0; margin: 0; text-indent: -9999px;}
+#urlnav li a:hover { background-color: #eee; }
+
+#urlnav li.top a { background-image: url(/i/194.png); }
+#urlnav li.bottom a { background-image: url(/i/193.png); }
+#urlnav li.clear a { background-image: url(/i/150.png); }
+#urlnav li.permalink a { background-image: url(/i/089.png); }
+
 .wrapper { padding: 20px; }
 
 .hdr { float: left; }
@@ -16,7 +26,7 @@ ul.nav li a:hover { text-decoration: underline; }
 .hdr a.back { float: left; }
 .hdr ul.nav { margin-left: 20px; }
 
-ul.lines { clear: both; }
+ul.lines { clear: both; margin: 0 30px 20px 20px; }
 ul.lines li { list-style: none; font-family: "Courier New",monospace; line-height: 1.6em; font-size: 1.1em; clear: left; background: #eee; }
 ul.lines li:hover span.t, ul.lines li.hover span.t { background: #efe; }
 ul.lines li.action { color:#9C009C; }

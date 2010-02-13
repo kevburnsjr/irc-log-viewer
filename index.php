@@ -15,21 +15,19 @@ if(getenv('APP_ENV') == 'local') {
 <html>
     <head>
         <title><?=$title?></title>
-        
         <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" />
-        
         <script type="text/javascript" src="/js/jquery-1.4.min.js"></script>
         <script type="text/javascript" src="/js/jquery.plugins.js"></script>
         <script type="text/javascript" src="/js/global.js"></script>
     </head>
-    <body><div class="wrapper">
+    <body><a name="top"></a><div class="wrapper">
 <?
     if(isset($_REQUEST['date'])) {
         $logdate = $_REQUEST['date'];
         $filename = $logdir.'/'.$logprefix.'.log.'.$logdate;
         $lines = file_exists($filename) ? file($filename) : null;
     }
-	if(isset($_REQUEST['date']) && count($lines)) { ?>      
+	if(isset($_REQUEST['date']) && count($lines)) { ?>
         <div class="hdr">
             <h1><?=$title?> - <?=$logdate?></h1>
             <ul class="nav">
@@ -79,6 +77,12 @@ if(getenv('APP_ENV') == 'local') {
         } 
         ?> 
         </ul>
+        <ul class="nav" id="urlnav">
+            <li class="top"><a href='#top' title="Top">Top</a></li>
+            <li class="bottom"><a href='#bottom' title="Bottom">Bottom</a></li>
+            <li class="clear"><a href='#' title="Clear Selection">Clear Selection</a></li>
+            <li class="permalink"><a href='/' title="Permalink">Permalink</a></li>
+        </ul>
 <?
 	} else {
 		$files = scandir($logdir);
@@ -90,6 +94,6 @@ if(getenv('APP_ENV') == 'local') {
 		}
 	}
 ?>
-    </div></body>
+    </div><a name="bottom"></a></body>
 </html>
 
