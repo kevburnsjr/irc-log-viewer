@@ -9,10 +9,12 @@ if(getenv('APP_ENV') == 'local') {
     $logdir = dirname(__FILE__)."/sample-logs";
     $baseurl = "http://rest.local";
     $logprefix = "rest";
+    $channel_name = "#rest";
 } else {
     $logdir = "/home/kevburns/eggdrop/logs/rest";
     $baseurl = "http://rest.hackyhack.net";
     $logprefix = "rest";
+    $channel_name = "#rest";
 }
 if(isset($_REQUEST['date'])) {
     $logdate = $_REQUEST['date'];
@@ -74,10 +76,12 @@ if(isset($_REQUEST['date'])) {
             }
             if(preg_match("/^Nick change: /",$line)) {
                 $line_classes[] = 'nickchange';
-            } else if(preg_match("/ joined /",$line)) {
+            } else if(preg_match("/ joined $channel_name\.$/",$line)) {
                 $line_classes[] = 'join';
             } else if(preg_match("/ mode change /",$line)) {
                 $line_classes[] = 'mode';
+            } else if(preg_match("/ left $channel_name\.$/",$line)) {
+                $line_classes[] = 'left';
             } else if(preg_match("/ left irc: /",$line)) {
                 $line_classes[] = 'left';
             } else if(preg_match("/left irc: Quit: /",$line)) {
