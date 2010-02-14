@@ -133,5 +133,15 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
 <?
 	}
 ?>
-    </div></body>
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-13006615-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
 </html>
