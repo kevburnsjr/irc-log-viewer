@@ -33,7 +33,7 @@ ul.lines { position: absolute; top: 58px; right: 50px; bottom: 20px; left: 20px;
 .hdr ul.nav li a, .hdr ul.nav li span { line-height: 2em; }
 .hdr h1 span.date { font-size: 0.5em; margin-left: 10px; font-family: "Courier New",monospace; }
 
-ul.lines { clear: both; border: 3px solid #999; border-top: 0; overflow: scroll; overflow-x: hidden; margin: 0; }
+ul.lines { clear: both; border: 3px solid #999; border-top: 0; overflow: scroll; overflow-x: hidden; margin: 0; background: #fff; }
 ul.lines li { list-style: none; font-family: "Courier New",monospace; line-height: 1.6em; font-size: 1.1em; clear: left; background: #eee; }
 ul.lines li:hover span.t, ul.lines li.hover span.t { background: #efe; }
 
