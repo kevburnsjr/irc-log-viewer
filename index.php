@@ -112,6 +112,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
             <li class="bottom"><a href='#<?=$i-1?>' title="Bottom">Bottom</a></li>
             <li class="clear"><a href='#none' title="Clear Selection">Clear Selection</a></li>
             <li class="permalink"><a href='#' title="Permalink">Permalink</a></li>
+            <li class="github"><a href="http://github.com/KevBurnsJr/rest-irc-log-viewer">Fork me on GitHub</a>
         </ul>
 <?
 	} else {

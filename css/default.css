@@ -9,9 +9,9 @@ ul.nav li span { color: #999; }
 ul.nav li a:hover { text-decoration: underline; }
 
 /* -= Layout =- */
-.hdr { position: absolute; left: 0; right: 0; top: 0; height: 45px; margin: 0px 50px 0 20px; padding: 15px 0 0; border-bottom: 3px solid #aaa; background: #fff; }
-#urlnav { position: absolute; top: 60px; right: 9px; }
-ul.lines { position: absolute; top: 63px; right: 50px; bottom: 20px; left: 20px; }
+.hdr { position: absolute; left: 0; right: 0; top: 0; height: 43px; margin: 0px 50px 0 20px; padding: 12px 0 0; border-bottom: 3px solid #aaa; background: #fff; }
+#urlnav { position: absolute; top: 55px; right: 9px; }
+ul.lines { position: absolute; top: 58px; right: 50px; bottom: 20px; left: 20px; }
 
 #urlnav { float: right; padding: 0; margin: 0; }
 #urlnav li { clear: both; overflow: hidden; padding: 0; margin: 0;  }
@@ -22,6 +22,8 @@ ul.lines { position: absolute; top: 63px; right: 50px; bottom: 20px; left: 20px;
 #urlnav li.bottom a { background-image: url(/i/193.png); }
 #urlnav li.clear a { background-image: url(/i/150.png); }
 #urlnav li.permalink a { background-image: url(/i/089.png); }
+#urlnav li.github { margin-top: 32px; }
+#urlnav li.github a { background-image: url(http://github.com/favicon.png); }
 
 .wrapper { padding: 0; }
 
