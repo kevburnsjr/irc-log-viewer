@@ -21,7 +21,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
     $logdate = $_REQUEST['date'];
     $filename = $logdir.'/'.$logprefix.'.log.'.$logdate;
     $lines = file_exists($filename) ? file($filename) : null;
-    $subtitle = " - ".date('D, M jS Y ',strtotime($logdate));
+    $subtitle = " ".$logdate;
 }
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -46,7 +46,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
         }
     ?>
         <div class="hdr">
-            <h1><?=$title?> <span class="date"><?=date('D, M jS Y ',strtotime($logdate))?></span></h1>
+            <h1><?=$title?> <span class="date"><?=$logdate?></span></h1>
             <ul class="nav">
                 <li class="index"><a href='/'>index</a></li>
             <? if($prev) { ?>
