@@ -1,0 +1,24 @@
+#Rest Log Viewer
+
+This is a log viewer for #rest on irc.freenode.net
+Feel free to fork and make changes.  
+Pull requests will be handled promptly.
+
+Sample Apache VHost:
+
+<VirtualHost *:80>
+    
+    ServerName rest.local
+    
+    DocumentRoot /home/kev/web/rest/dev
+    <Directory   /home/kev/web/rest/dev>
+        AllowOverride All
+    </Directory>
+
+    SetEnv APP_ENV local     # <-- IMPORTANT
+    
+</VirtualHost>
+
+Wish List:
+
+* Highlight search string in HTTP_REFERER for users coming from Google search.
