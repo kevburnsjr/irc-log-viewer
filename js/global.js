@@ -4,7 +4,9 @@ $(document).ready(function(){
         var hash = window.location.hash;
         var segs = hash.split('/');
         if($(segs[0]).length) {
-            $(window).scrollTo(segs[0]);
+            $('ul.lines').scrollTo(segs[0]);
+        }
+        if(segs.length > 1) {
             if(segs[1].substr(0,1) == 'h') {
                 $(segs[1].substr(1).split(',')).each(function(i,id){
                     $('#'+id).toggleClass('selected');
@@ -38,6 +40,10 @@ $(document).ready(function(){
     });
     $('#urlnav li.permalink a').click(function(e){
         window.location = $(this).attr('href');
+    });
+    $('#urlnav li.top a, #urlnav li.bottom a').click(function(e){
+        e.preventDefault();
+        $('ul.lines').scrollTo($(this).attr('href'));
     });
 
 });

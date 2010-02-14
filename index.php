@@ -16,7 +16,8 @@ if(getenv('APP_ENV') == 'local') {
     $logprefix = "rest";
     $channel_name = "#rest";
 }
-if(isset($_REQUEST['date'])) {
+$lines = array();
+if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date'])) {
     $logdate = $_REQUEST['date'];
     $filename = $logdir.'/'.$logprefix.'.log.'.$logdate;
     $lines = file_exists($filename) ? file($filename) : null;
@@ -32,7 +33,7 @@ if(isset($_REQUEST['date'])) {
         <script type="text/javascript" src="/js/jquery.plugins.js"></script>
         <script type="text/javascript" src="/js/global.js"></script>
     </head>
-    <body><a name="top"></a><div class="wrapper">
+    <body><div class="wrapper">
 <?
 	if(isset($_REQUEST['date']) && count($lines)) { 
 		$files = array_slice(scandir($logdir),2);
@@ -104,16 +105,22 @@ if(isset($_REQUEST['date'])) {
         <? 
             $i++;
         } 
-        ?> 
+        ?>
         </ul>
         <ul class="nav" id="urlnav">
-            <li class="top"><a href='#top' title="Top">Top</a></li>
-            <li class="bottom"><a href='#bottom' title="Bottom">Bottom</a></li>
+            <li class="top"><a href='#0' title="Top">Top</a></li>
+            <li class="bottom"><a href='#<?=$i-1?>' title="Bottom">Bottom</a></li>
             <li class="clear"><a href='#none' title="Clear Selection">Clear Selection</a></li>
             <li class="permalink"><a href='#' title="Permalink">Permalink</a></li>
         </ul>
 <?
 	} else {
+?>
+        <div style="padding: 15px 20px;">
+            <h1><?=$title?></h1>
+        </div>
+        <div style="padding: 0 20px;">
+<?
 		$files = scandir($logdir);
 		foreach($files as $file) {
 			if(strpos($file, $logprefix.'.log') > -1) {
@@ -121,7 +128,10 @@ if(isset($_REQUEST['date'])) {
 				echo "<a href='".$baseurl."/".$filedate.".html'>".$filedate."</a><br />";
 			}
 		}
+?>
+        </div>
+<?
 	}
 ?>
-    </div><a name="bottom"></a></body>
+    </div></body>
 </html>
