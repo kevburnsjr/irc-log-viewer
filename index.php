@@ -95,7 +95,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
                 $line = LinkifyText($line);
             }
             
-            $line = preg_replace("/^\[([\d]{2}):([\d]{2})\](.*)/", "<a href='#l$i' class='ts'>[\\1:\\2]</a><span class='t'>\\3</span>", $line);
+            $line = preg_replace("/^\[([\d]{2}):([\d]{2})\](.*)/", "<span class='ts'>[\\1:\\2]</span><span class='t'>\\3</span>", $line);
             
             $classes = implode(' ', $line_classes);
             $classes = $classes ? ' class="'.$classes.'"' : '';
@@ -117,10 +117,10 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
 <?
 	} else {
 ?>
-        <div style="padding: 15px 20px;">
+        <div style="padding: 12px 20px 18px;">
             <h1><?=$title?></h1>
         </div>
-        <div style="padding: 0 20px;">
+        <div style="padding: 0 40px;">
 <?
 		$files = scandir($logdir);
 		foreach($files as $file) {

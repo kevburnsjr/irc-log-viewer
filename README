@@ -16,3 +16,6 @@ Sample Apache VHost:
 
 Wish List:
 * Highlight search string in HTTP_REFERER for users coming from Google search.
+* Add shift-click to line selection
+* Strip invalid unicode characters
+* Linkify user names? (where to link to?)
