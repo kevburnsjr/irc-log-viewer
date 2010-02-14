@@ -42,6 +42,6 @@ ul.lines li.left { color:#0000FC; }
 ul.lines li.selected span.t { background: #cfc; border-color: #9d9; }
 ul.lines li.selected a.ts {  background: #ddd; color: #555; border-bottom: 1px solid #ddd; }
 
-ul.lines li a.ts { text-decoration: none; background: #eee; float: left; color: #999; }
+ul.lines li a.ts { line-height: 1.2em; padding: 0.2em 0.1em; text-decoration: none; background: #eee; float: left; color: #999; }
 ul.lines li a.ts:hover { background: #ccc; color: #555; }
-ul.lines li span.t { margin-left: 4.25em; border-left: 3px solid #eee; border-bottom: 1px solid #eee; padding: 0.2em; line-height: 1.2em; display: block; background: #fff; }
+ul.lines li span.t { margin-left: 4.4em; border-left: 3px solid #eee; border-bottom: 1px solid #eee; padding: 0.2em; line-height: 1.2em; display: block; background: #fff; }
