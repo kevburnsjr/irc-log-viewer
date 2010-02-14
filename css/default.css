@@ -37,9 +37,9 @@ ul.lines { clear: both; border: 3px solid #bbb; border-top: 0; overflow: scroll;
 ul.lines li { list-style: none; font-family: "Courier New",monospace; line-height: 1.6em; font-size: 1.1em; clear: left; background: #eee; }
 ul.lines li:hover span.t, ul.lines li.hover span.t { background: #efe; }
 
-ul.lines li.action { color:#9C009C; }
-ul.lines li.nick, ul.lines li.join, ul.lines li.mode { color:#009300; }
-ul.lines li.left { color:#0000FC; }
+ul.lines li.action span.t { color:#9C009C; }
+ul.lines li.nick span.t, ul.lines li.join span.t, ul.lines li.mode span.t { color:#009300; }
+ul.lines li.left span.t { color:#0000FC; }
 
 ul.lines li.selected { background: #ddd; border-color: #9d9; }
 ul.lines li.selected span.t { background: #cfc; border-color: #9d9; }
