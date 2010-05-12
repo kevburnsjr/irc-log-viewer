@@ -2,19 +2,19 @@
 
 require_once('functions.php');
 
-$title = "#Rest on Freenode";
+$title = "#Redis on Freenode";
 $subtitle = "";
 
 if(getenv('APP_ENV') == 'local') {
     $logdir = dirname(__FILE__)."/sample-logs";
-    $baseurl = "http://rest.local";
-    $logprefix = "rest";
-    $channel_name = "#rest";
+    $baseurl = "http://redis.local";
+    $logprefix = "redis";
+    $channel_name = "#redis";
 } else {
-    $logdir = "/home/kevburns/eggdrop/logs/rest";
-    $baseurl = "http://rest.hackyhack.net";
-    $logprefix = "rest";
-    $channel_name = "#rest";
+    $logdir = "/home/kevburns/eggdrop/logs/redis";
+    $baseurl = "http://redis.hackyhack.net";
+    $logprefix = "redis";
+    $channel_name = "#redis";
 }
 $lines = array();
 if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date'])) {
@@ -112,7 +112,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
             <li class="bottom"><a href='#<?=$i-1?>' title="Bottom">Bottom</a></li>
             <li class="clear"><a href='#none' title="Clear Selection">Clear Selection</a></li>
             <li class="permalink"><a href='#' title="Permalink">Permalink</a></li>
-            <li class="webchat"><a href="http://webchat.freenode.net/?randomnick=1&channels=rest">Freenode WebChat</a>
+            <li class="webchat"><a href="http://webchat.freenode.net/?randomnick=1&channels=redis">Freenode WebChat</a>
             <li class="github"><a href="http://github.com/KevBurnsJr/rest-irc-log-viewer">Fork me on GitHub</a>
         </ul>
 <?
