@@ -2,7 +2,7 @@
 
 require_once('functions.php');
 
-$title = "Chat logs for #redis on irc.freenode.net";
+$title = "#redis on irc.freenode.net";
 $subtitle = "";
 
 if(getenv('APP_ENV') == 'local') {
@@ -21,7 +21,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
     $logdate = $_REQUEST['date'];
     $filename = $logdir.'/'.$logprefix.'.log.'.$logdate;
     $lines = file_exists($filename) ? file($filename) : null;
-    $subtitle = " ".$logdate;
+    $subtitle = " :: ".$logdate;
 }
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
