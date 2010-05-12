@@ -2,8 +2,7 @@
 
 require_once('functions.php');
 
-$title = "#redis on irc.freenode.net";
-$subtitle = "";
+$pagetitle = "#redis on irc.freenode.net";
 
 if(getenv('APP_ENV') == 'local') {
     $logdir = dirname(__FILE__)."/sample-logs";
@@ -21,7 +20,11 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
     $logdate = $_REQUEST['date'];
     $filename = $logdir.'/'.$logprefix.'.log.'.$logdate;
     $lines = file_exists($filename) ? file($filename) : null;
-    $subtitle = " :: ".$logdate;
+    $title = "#redis";
+    $subtitle = " : ".$logdate;
+} else {
+    $title = "Chat logs for #redis on irc.freenode.net";
+    $subtitle = "";
 }
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -52,7 +55,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
         }
     ?>
         <div class="hdr">
-            <h1><?=$title?> <span class="date"><?=$logdate?></span></h1>
+            <h1><?=$pagetitle?> <span class="date"><?=$logdate?></span></h1>
             <ul class="nav">
                 <li class="index"><a href='/'>index</a></li>
             <? if($prev) { ?>
@@ -125,7 +128,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
 	} else {
 ?>
         <div style="padding: 12px 20px 18px;">
-            <h1><?=$title?></h1>
+            <h1><?=$pagetitle?></h1>
         </div>
         <div style="padding: 0 40px;">
 <?
