@@ -2,7 +2,7 @@
 
 require_once('functions.php');
 
-$title = "#Redis on Freenode";
+$title = "Chat logs for #redis on irc.freenode.net";
 $subtitle = "";
 
 if(getenv('APP_ENV') == 'local') {
@@ -28,6 +28,12 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
 <html>
     <head>
         <title><?=$title.$subtitle?></title>
+        
+        <meta name="robots" content="index, follow" />
+        <meta name='title' content="<?=$title.$subtitle?>"/>
+        <meta name='description' content="Redis 2.0.0 RC1 is near, ETA: end of May."/>
+        <meta name='keywords' content="redis, key-value, irc, chat, logs, database"/>
+
         <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" />
         <script type="text/javascript" src="/js/jquery-1.4.min.js"></script>
         <script type="text/javascript" src="/js/jquery.plugins.js"></script>
