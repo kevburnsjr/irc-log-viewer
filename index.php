@@ -128,7 +128,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
 	} else {
 ?>
         <div style="padding: 12px 20px 18px;">
-            <h1><?=$pagetitle?></h1>
+            <h1>Chat logs for <?=$pagetitle?></h1>
         </div>
         <div style="padding: 0 40px;">
 <?
