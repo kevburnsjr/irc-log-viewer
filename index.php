@@ -2,7 +2,6 @@
 
 require_once('functions.php');
 
-
 $channel = getenv('APP_CHANNEL') ? getenv('APP_CHANNEL') : "rest";
 $network = getenv('APP_NETWORK') ? getenv('APP_NETWORK') : "irc.freenode.net";
 
@@ -13,7 +12,7 @@ $logprefix = $channel;
 $title = "#{$channel} on Freenode";
 $subtitle = "";
 
-$host = getenv('APP_OVERRIDE_HOST') ? getenv('APP_OVERRIDE_HOST') : $_SERVER['HTTP_HOST'];
+$host = getenv('APP_HOST') ? getenv('APP_HOST') : $_SERVER['HTTP_HOST'];
 $baseurl = "http://".$host;
 
 $date = isset($_REQUEST['date']) && $_REQUEST['date'] ? $_REQUEST['date'] : date('Y-m-d');
@@ -42,7 +41,7 @@ if($date && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $date)) {
     </head>
     <body><div class="wrapper">
 <?
-	if(preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/',$date) && count($lines)) {
+	if(preg_match('/^[\d]{4}-[\d]{2}-[\d]{2}$/',$date) && count($lines)) {
 		$files = array_slice(scandir($logdir),2);
 		foreach($files as $i => $file) {
             if($file == $logprefix.'.log.'.$date) {
@@ -82,11 +81,11 @@ if($date && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $date)) {
             
             $line = htmlspecialchars($line);
             
-            if(preg_match("/^\[([\d]{2}):([\d]{2})\] Action: /",$line)) {
+            if(preg_match("/^[^\s]+ Action: /",$line)) {
                 $line = substr($line, 0, 8).substr($line, 16);
                 $line_classes[] = 'action';
             }
-            if(preg_match("/^\[([\d]{2}):([\d]{2})\] Nick change: /",$line)) {
+            if(preg_match("/^[^\s]+ Nick change: /",$line)) {
                 $line_classes[] = 'nickchange';
             } else if(preg_match("/ joined #{$channel}\.$/",$line)) {
                 $line_classes[] = 'join';
