@@ -2,26 +2,33 @@
 
 require_once('functions.php');
 
-$title = "#Rest on Freenode";
+
+$channel = getenv('APP_CHANNEL') ? getenv('APP_CHANNEL') : "rest";
+$network = getenv('APP_NETWORK') ? getenv('APP_NETWORK') : "irc.freenode.net";
+
+/* /home/kevburns/eggdrop/logs/rest/rest.log.2010-02-12 */
+$eggdrop_log_dir = "/home/kevburns/eggdrop/logs/".$channel;
+$logprefix = $channel;
+
+$title = "#{$channel} on Freenode";
 $subtitle = "";
+
+$host = getenv('APP_OVERRIDE_HOST') ? getenv('APP_OVERRIDE_HOST') : $_SERVER['HTTP_HOST'];
+$baseurl = "http://".$host;
+
+$date = isset($_REQUEST['date']) && $_REQUEST['date'] ? $_REQUEST['date'] : date('Y-m-d');
 
 if(getenv('APP_ENV') == 'local') {
     $logdir = dirname(__FILE__)."/sample-logs";
-    $baseurl = "http://rest.local";
-    $logprefix = "rest";
-    $channel_name = "#rest";
 } else {
-    $logdir = "/home/kevburns/eggdrop/logs/rest";
-    $baseurl = "http://rest.hackyhack.net";
-    $logprefix = "rest";
-    $channel_name = "#rest";
+    $logdir = $eggdrop_log_dir;
 }
+
 $lines = array();
-if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date'])) {
-    $logdate = $_REQUEST['date'];
-    $filename = $logdir.'/'.$logprefix.'.log.'.$logdate;
+if($date && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $date)) {
+    $filename = $logdir.'/'.$logprefix.'.log.'.$date;
     $lines = file_exists($filename) ? file($filename) : null;
-    $subtitle = " ".$logdate;
+    $subtitle = " ".$date;
 }
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -35,10 +42,10 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
     </head>
     <body><div class="wrapper">
 <?
-	if(isset($_REQUEST['date']) && count($lines)) { 
+	if(preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/',$date) && count($lines)) {
 		$files = array_slice(scandir($logdir),2);
 		foreach($files as $i => $file) {
-            if($file == $logprefix.'.log.'.$logdate) {
+            if($file == $logprefix.'.log.'.$date) {
                 $prev = $i > 0 ? substr($files[$i-1], strlen($logprefix)+5) : '';
                 $next = $i < count($files)-1 ? substr($files[$i+1], strlen($logprefix)+5) : '';
                 break;
@@ -46,9 +53,13 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
         }
     ?>
         <div class="hdr">
-            <h1><?=$title?> <span class="date"><?=$logdate?></span></h1>
+            <h1>
+                <?=$title?> 
+                <span class="date"><?=$date?></span>
+                <span class="txt">(<a href="/<?=$date?>.txt">txt</a>)</span>
+            </h1>
             <ul class="nav">
-                <li class="index"><a href='/'>index</a></li>
+                <li class="index"><a href='/index.html'>index</a></li>
             <? if($prev) { ?>
                 <li class="prev"><a href='<?=$baseurl?>/<?=$prev?>.html'>prev</a></li>
             <? } else { ?>
@@ -65,23 +76,23 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
         <? 
         $times = array();
         $i = 0;
-        foreach ($lines as $line_num => $line) { 
+        foreach ($lines as $line_num => $line) {
             $line = trim($line,"\r\n");
             $line_classes = array();
             
             $line = htmlspecialchars($line);
             
-            if(preg_match("/^Action: /",$line)) {
-                $line = preg_replace("/^Action: /","",$line);
+            if(preg_match("/^\[([\d]{2}):([\d]{2})\] Action: /",$line)) {
+                $line = substr($line, 0, 8).substr($line, 16);
                 $line_classes[] = 'action';
             }
-            if(preg_match("/^Nick change: /",$line)) {
+            if(preg_match("/^\[([\d]{2}):([\d]{2})\] Nick change: /",$line)) {
                 $line_classes[] = 'nickchange';
-            } else if(preg_match("/ joined $channel_name\.$/",$line)) {
+            } else if(preg_match("/ joined #{$channel}\.$/",$line)) {
                 $line_classes[] = 'join';
             } else if(preg_match("/ mode change /",$line)) {
                 $line_classes[] = 'mode';
-            } else if(preg_match("/ left $channel_name\.$/",$line)) {
+            } else if(preg_match("/ left #{$channel}\.$/",$line)) {
                 $line_classes[] = 'left';
             } else if(preg_match("/ left irc: /",$line)) {
                 $line_classes[] = 'left';
@@ -133,7 +144,7 @@ if(isset($_GET['date']) && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $_GET['date
 ?>
         </div>
 <?
-	}
+	} 
 ?>
     </div>
 <script type="text/javascript">
