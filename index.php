@@ -143,7 +143,7 @@ if($date && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $date)) {
                 $w = floor(filesize($logdir."/".$file)/$maxsize*100);
 				$filedate = substr($file, strlen($logprefix)+5);
 				echo "<a href='".$baseurl."/".$filedate.".html'>".$filedate."</a>";
-                echo "<div class='bar'><div style='width:".$w."%'>&nbsp;</div></div>";
+                echo "<div class='bar'><div style='width:".$w."%'>&nbsp;</div></div>\n";
 			}
 		}
         
