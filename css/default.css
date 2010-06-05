@@ -26,7 +26,7 @@ ul.lines { position: absolute; top: 35px; right: 32px; bottom: 20px; left: 20px;
 #urlnav li.webchat a { background-image: url(http://irc.hackyhack.net/i/favicon13.gif); }
 #urlnav li.github a { background-image: url(http://github.com/favicon.png); }
 
-.wrapper { padding: 0; }
+.wrapper { padding: 0; }    
 
 .hdr h1 { float: left; margin: 5px 0; font-size: 2em; color: #999; }
 .hdr h1 span.date { font-size: 0.5em; margin-left: 10px; font-family: "Courier New",monospace; color: #555; }
@@ -42,8 +42,8 @@ ul.lines li { list-style: none; font-family: "Courier New",monospace; line-heigh
 ul.lines li:hover span.t, ul.lines li.hover span.t { background: #efe; }
 
 ul.lines li.action span.t { color:#9C009C; }
-ul.lines li.nick span.t, ul.lines li.join span.t, ul.lines li.mode span.t { color:#009300; }
-ul.lines li.left span.t { color:#0000FC; }
+ul.lines li.nick span.t, ul.lines li.join span.t, ul.lines li.mode span.t { color:#99CC99; }
+ul.lines li.left span.t { color:#99bbcc; }
 
 ul.lines li.selected { background: #ddd; border-color: #9d9; }
 ul.lines li.selected span.t { background: #cfc; border-color: #9d9; }
