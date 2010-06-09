@@ -1,3 +1,4 @@
 
   RewriteEngine On  
-  RewriteRule ^(.+).html$ index.php?date=$1
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php

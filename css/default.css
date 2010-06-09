@@ -42,6 +42,7 @@ ul.lines li { list-style: none; font-family: "Courier New",monospace; line-heigh
 ul.lines li:hover span.t, ul.lines li.hover span.t { background: #efe; }
 
 ul.lines li.action span.t { color:#9C009C; }
+ul.lines li.nickchange span.t { color:#aaa; }
 ul.lines li.nick span.t, ul.lines li.join span.t, ul.lines li.mode span.t { color:#99CC99; }
 ul.lines li.left span.t { color:#99bbcc; }
 

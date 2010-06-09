@@ -16,7 +16,9 @@ $(document).ready(function(){
         }
     }
     
-    $('ul.lines li').hover(function(){ $(this).toggleClass('hover'); });
+    $('ul.lines li').hover(function(){ 
+        $(this).toggleClass('hover'); 
+    });
     $('ul.lines li').click(function(e){
         if($(e.target).is("a")){ return; }
         $(this).toggleClass('selected'); 

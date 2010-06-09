@@ -55,3 +55,47 @@ function LinkifyText($sText, $aAttributes = null, $aProtocols = null, $aSubdomai
 
 	return $sNewText . $sText;
 }
+
+function line_as_html($line, $i, $channel) {
+    $line = trim($line,"\r\n");
+    $line_classes = array();
+    
+    $line = htmlspecialchars($line);
+    
+    if(preg_match("/^[^\s]+ Action: ([^\s]+)/",$line,$m)) {
+        $line = substr($line, 0, 8).substr($line, 16);
+        $line_classes[] = 'action';
+        $line_classes[] = 'user-'.$m[1];
+    }
+    if(preg_match("/^[^\s]+ Nick change: ([^\s]+) -&gt; ([^\s]+)$/",$line,$m)) {
+        $line = substr($line, 0, 8).substr($line, 21);
+        $line_classes[] = 'nickchange';
+        $line_classes[] = 'user-'.$m[2];
+    } else if(preg_match("/ ([^\s]+) ([^\s]+) joined #{$channel}\.$/",$line,$m)) {
+        $line_classes[] = 'join';
+        $line_classes[] = 'user-'.$m[1];
+    } else if(preg_match("/ mode change /",$line)) {
+        $line_classes[] = 'mode';
+    } else if(preg_match("/ ([^\s]+) ([^\s]+) left #{$channel}\.$/",$line,$m)) {
+        $line_classes[] = 'left';
+        $line_classes[] = 'user-'.$m[1];
+    } else if(preg_match("/ ([^\s]+) ([^\s]+) left irc: /",$line,$m)) {
+        $line_classes[] = 'left';
+        $line_classes[] = 'user-'.$m[1];
+    } else {
+        $line = LinkifyText($line);
+        if(preg_match("/^([^\s]+) &lt;([^\s]+)&gt; (.*)$/",$line,$m)) {
+            $line_classes[] = 'user-'.$m[2];
+            $line = "{$m[1]} <span class='name'>&lt;{$m[2]}&gt;</span> {$m[3]}";
+        }
+    }
+    
+    $line = preg_replace("/^\[([\d]{2}):([\d]{2})\](.*)/", "<span class='ts'>[\\1:\\2]</span><span class='t'>\\3</span>", $line);
+    
+    $classes = implode(' ', $line_classes);
+    $classes = $classes ? ' class="'.$classes.'"' : '';
+    
+    $html = "<li id='{$i}'{$classes}>{$line}</li>";
+    
+    return $html;
+}
