@@ -45,9 +45,9 @@
         <li class="clear"><a href='#none' title="Clear Selection">Clear Selection</a></li>
         <li class="permalink"><a href='#' title="Permalink">Permalink</a></li>
         <? if($network == "irc.freenode.net") { ?>
-        <li class="webchat"><a href="http://webchat.freenode.net/?channels=<?=$channel?>" target="_blank">Freenode WebChat</a>
+        <li class="webchat"><a href="http://webchat.freenode.net/?channels=<?=$channel?>" title="Join WebChat" target="_blank">Join WebChat</a>
         <? } ?>
-        <li class="github"><a href="http://github.com/KevBurnsJr/irc-log-viewer" target="_blank">Fork me on GitHub</a>
+        <li class="github"><a href="http://github.com/KevBurnsJr/irc-log-viewer" title="Fork me on GitHub" target="_blank">Fork me on GitHub</a>
     </ul>
     
 <? include('footer.html.php'); ?>
