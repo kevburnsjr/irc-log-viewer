@@ -26,7 +26,7 @@ ul.lines { position: absolute; top: 35px; right: 32px; bottom: 20px; left: 20px;
 #urlnav li.webchat a { background-image: url(http://irc.hackyhack.net/i/favicon13.gif); }
 #urlnav li.github a { background-image: url(http://github.com/favicon.png); }
 
-.wrapper { padding: 0; }    
+.wrapper { padding: 0; }
 
 .hdr h1 { float: left; margin: 5px 0; font-size: 2em; color: #999; }
 .hdr h1 span.date { font-size: 0.5em; margin-left: 10px; font-family: "Courier New",monospace; color: #555; }
@@ -36,6 +36,8 @@ ul.lines { position: absolute; top: 35px; right: 32px; bottom: 20px; left: 20px;
 .hdr a.back { float: left; }
 .hdr ul.nav { margin: 0; float: right; }
 .hdr ul.nav li a, .hdr ul.nav li span { line-height: 32px; font-size: 1.1em; }
+.hdr h1 a { text-decoration: none; color: #000099; }
+.hdr h1 a:hover { text-decoration: none; border-bottom: 2px solid #000099; }
 
 ul.lines { clear: both; border: 3px solid #bbb; border-top: 0; overflow: scroll; overflow-x: hidden; margin: 0; background: #fff; }
 ul.lines li { list-style: none; font-family: "Courier New",monospace; line-height: 1.6em; font-size: 1.1em; clear: left; background: #eee; }

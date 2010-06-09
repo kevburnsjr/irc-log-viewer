@@ -12,7 +12,7 @@
 ?>
     <div class="hdr">
         <h1>
-            <?=$title?> 
+            <a href="/index.html"><?=$title?></a>
             <span class="date"><?=$date?></span>
             <span class="txt">(<a href="/<?=$date?>.txt">txt</a>)</span>
         </h1>
