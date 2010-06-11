@@ -57,6 +57,6 @@ ul.lines li span.ts:hover { color: #555; }
 ul.lines li span.t { color: #333; margin-left: 4.4em; border-left: 3px solid #e9e9e9; border-bottom: 1px solid #eee; padding: 0.2em; line-height: 1.2em; display: block; background: #fff; }
 
 .dates { padding: 0 40px; }
-.dates a { float: left; clear: both; }
-div.bar { margin-left: 75px; display: block; margin-bottom: 5px; }
+.dates a { float: left; clear: both; text-decoration: none; line-height: 13px; }
+div.bar { margin-left: 75px; display: block; margin-bottom: 2px; line-height: 13px; }
 div.bar div { display: block; background: #666; }
