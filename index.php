@@ -5,10 +5,12 @@ require_once('functions.php');
 // SetEnv APP_CHANNEL rest
 // SetEnv APP_NETWORK irc.freenode.net
 // SetEnv APP_LOGDIR /var/log/eggdrop/rest
+// SetEnv APP_GACODE UA-13006615-1
 $host    = getenv('APP_HOST')    ? getenv('APP_HOST')    : $_SERVER['HTTP_HOST'];
 $channel = getenv('APP_CHANNEL') ? getenv('APP_CHANNEL') : "rest";
 $network = getenv('APP_NETWORK') ? getenv('APP_NETWORK') : "irc.freenode.net";
 $logdir  = getenv('APP_LOGDIR')  ? getenv('APP_LOGDIR')  : dirname(__FILE__)."/sample-logs";
+$gacoe   = getenv('APP_GACODE');
 
 $title = "#{$channel} on {$network}";
 $subtitle = "";
