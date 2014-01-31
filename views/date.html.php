@@ -1,6 +1,6 @@
 <?php
-    include('header.html.php');
-    
+    include 'header.html.php';
+
     $files = array_slice(scandir($logdir), 2);
     foreach ($files as $i => $file) {
         if ('/'.$file == date_to_log_filename('', $logprefix, $date)) {
@@ -18,16 +18,16 @@
         </h1>
         <ul class="nav">
             <li class="index"><a href='<?=$baseurl?>index.html'>index</a></li>
-        <? if($prev) { ?>
+        <?php if ($prev) { ?>
             <li class="prev"><a href='<?=$baseurl?><?=$prev?>.html'>prev</a></li>
-        <? } else { ?>
+        <?php } else { ?>
             <li class="prev"><span>prev</span></li>
-        <? } ?>
-        <? if($next) { ?>
+        <?php } ?>
+        <?php if ($next) { ?>
             <li class="next"><a href='<?=$baseurl?><?=$next?>.html'>next</a></li>
-        <? } else { ?>
+        <?php } else { ?>
             <li class="next"><span>next</span></li>
-        <? } ?>
+        <?php } ?>
         </ul>
     </div>
     <ul class="lines">
@@ -36,7 +36,7 @@
         foreach ($lines as $line_num => $line) {
             echo line_as_html($line, $i, $channel);
             $i++;
-        } 
+        }
     ?>
     </ul>
     <ul class="nav" id="urlnav">
@@ -44,10 +44,10 @@
         <li class="bottom"><a href='#<?=$i-1?>' title="Bottom">Bottom</a></li>
         <li class="clear"><a href='#none' title="Clear Selection">Clear Selection</a></li>
         <li class="permalink"><a href='#' title="Permalink">Permalink</a></li>
-        <? if($network == "irc.freenode.net") { ?>
+        <?php if ($network == "irc.freenode.net") { ?>
         <li class="webchat"><a href="http://webchat.freenode.net/?channels=<?=$channel?>" title="Join WebChat" target="_blank">Join WebChat</a>
-        <? } ?>
+        <?php } ?>
         <li class="github"><a href="http://github.com/KevBurnsJr/irc-log-viewer" title="Fork me on GitHub" target="_blank">Fork me on GitHub</a>
     </ul>
-    
+
 <?php require('footer.html.php'); ?>

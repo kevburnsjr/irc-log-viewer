@@ -5,7 +5,7 @@ mb_language('ja');
 mb_internal_encoding('UTF-8');
 //setlocale(LC_ALL, 'ja_JP.UTF-8');
 
-require_once('functions.php');
+require_once 'functions.php';
 
 // SetEnv APP_CHANNEL rest
 // SetEnv APP_NETWORK irc.freenode.net
@@ -37,32 +37,32 @@ $format = $uri_match_date && in_array($m[2], $valid_formats) ? $m[2] : "html";
 //$logprefix = $channel;
 $logprefix = '';
 $lines = array();
-if($date && preg_match("/^[\d]{4}(-|\.)[\d]{2}(-|\.)[\d]{2}$/", $date)) {
+if ($date && preg_match("/^[\d]{4}(-|\.)[\d]{2}(-|\.)[\d]{2}$/", $date)) {
     $filename = date_to_log_filename($logdir, $logprefix, $date);
     //var_dump($filename);
     $lines = file_exists($filename) ? file($filename) : null;
     $subtitle = " ".$date;
 }
 
-if($format == "txt") {
+if ($format == "txt") {
     header("Content-Type: text/plain");
-    if(count($lines)) {
+    if (count($lines)) {
         header("HTTP/1.0 200 Okay");
-        include("views/date.txt.php");
+        include 'views/date.txt.php';
     } else {
         header("HTTP/1.0 404 Not Found");
         echo "Log file for {$date} not found.";
     }
-} else if($format == "html") {
+} elseif ($format == "html") {
     header("Content-Type: text/html");
-    if($uri_match_date && count($lines)) {
+    if ($uri_match_date && count($lines)) {
         header("HTTP/1.0 200 Okay");
-        require("views/date.html.php");
-    } else if($uri_match_index) {
+        require 'views/date.html.php';
+    } elseif ($uri_match_index) {
         header("HTTP/1.0 200 Okay");
-        require("views/index.html.php");
+        require 'views/index.html.php';
     } else {
         header("HTTP/1.0 404 Not Found");
-        require("views/index.html.php");
+        require 'views/index.html.php';
     }
 }
