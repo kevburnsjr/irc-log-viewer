@@ -31,7 +31,7 @@
         </ul>
     </div>
     <ul class="lines">
-    <? 
+    <?php
         $i = 0;
         foreach ($lines as $line_num => $line) {
             echo line_as_html($line, $i, $channel);
@@ -50,4 +50,4 @@
         <li class="github"><a href="http://github.com/KevBurnsJr/irc-log-viewer" title="Fork me on GitHub" target="_blank">Fork me on GitHub</a>
     </ul>
     
-<? include('footer.html.php'); ?>
+<?php require('footer.html.php'); ?>
