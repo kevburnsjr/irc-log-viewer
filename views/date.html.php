@@ -1,30 +1,30 @@
 <?php
     include('header.html.php');
     
-    $files = array_slice(scandir($logdir),2);
-    foreach($files as $i => $file) {
-        if($file == $logprefix.'.log.'.$date) {
-            $prev = $i > 0 ? substr($files[$i-1], strlen($logprefix)+5) : '';
-            $next = $i < count($files)-1 ? substr($files[$i+1], strlen($logprefix)+5) : '';
+    $files = array_slice(scandir($logdir), 2);
+    foreach ($files as $i => $file) {
+        if ('/'.$file == date_to_log_filename('', $logprefix, $date)) {
+            $prev = $i > 0 ? log_filename_to_date($files[$i-1], $logprefix) : '';
+            $next = $i < count($files)-1 ? log_filename_to_date($files[$i+1], $logprefix) : '';
             break;
         }
     }
 ?>
     <div class="hdr">
         <h1>
-            <a href="/index.html"><?=$title?></a>
+            <a href="<?=$baseurl?>index.html"><?=$title?></a>
             <span class="date"><?=$date?></span>
             <span class="txt">(<a href="/<?=$date?>.txt">txt</a>)</span>
         </h1>
         <ul class="nav">
-            <li class="index"><a href='/index.html'>index</a></li>
+            <li class="index"><a href='<?=$baseurl?>index.html'>index</a></li>
         <? if($prev) { ?>
-            <li class="prev"><a href='<?=$baseurl?>/<?=$prev?>.html'>prev</a></li>
+            <li class="prev"><a href='<?=$baseurl?><?=$prev?>.html'>prev</a></li>
         <? } else { ?>
             <li class="prev"><span>prev</span></li>
         <? } ?>
         <? if($next) { ?>
-            <li class="next"><a href='<?=$baseurl?>/<?=$next?>.html'>next</a></li>
+            <li class="next"><a href='<?=$baseurl?><?=$next?>.html'>next</a></li>
         <? } else { ?>
             <li class="next"><span>next</span></li>
         <? } ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 // http://yellow5.us/journal/server_side_text_linkification/
 function LinkifyText($sText, $aAttributes = null, $aProtocols = null, $aSubdomains = null) {
     // Defaults
@@ -98,4 +98,29 @@ function line_as_html($line, $i, $channel) {
     $html = "<li id='{$i}'{$classes}>{$line}</li>";
     
     return $html;
+}
+
+
+function date_to_log_filename($logdir, $logprefix, $date)
+{
+    //$filename = $logdir.'/'.$logprefix.'.log.'.$date;
+    $filename = $logdir.'/'.$logprefix.$date.'.txt';
+    return $filename;
+}
+
+function is_valid_log_filename($file, $logprefix)
+{
+    //if (strpos($file, $logprefix.'.log') > -1) {
+    if (preg_match('/\d\d\d\d\.\d\d\.\d\d\.txt\z/', $file)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function log_filename_to_date($file, $logprefix)
+{
+    //$filedate = substr($file, strlen($logprefix)+5);
+    $filedate = substr($file, 0, 10);
+    return $filedate;
 }

@@ -9,28 +9,32 @@ require_once('functions.php');
 $host    = getenv('APP_HOST')    ? getenv('APP_HOST')    : $_SERVER['HTTP_HOST'];
 $channel = getenv('APP_CHANNEL') ? getenv('APP_CHANNEL') : "rest";
 $network = getenv('APP_NETWORK') ? getenv('APP_NETWORK') : "irc.freenode.net";
-$logdir  = getenv('APP_LOGDIR')  ? getenv('APP_LOGDIR')  : dirname(__FILE__)."/sample-logs";
+//$logdir  = getenv('APP_LOGDIR')  ? getenv('APP_LOGDIR')  : dirname(__FILE__)."/sample-logs";
+$logdir  = dirname(__FILE__).'/logs';
 $gacoe   = getenv('APP_GACODE');
 
 $title = "#{$channel} on {$network}";
 $subtitle = "";
 
-$baseurl = "http://".$host;
-$baserel = "/";
+$baseurl = "http://".$host."/";
 
 // Parse URL
 $uri = $_SERVER['REQUEST_URI'];
 $valid_formats = array("html","txt");
-$uri_match_date = preg_match("/^\/([\d]{4}-[\d]{2}-[\d]{2})\.([a-zA-Z0-9_-]+)$/", $uri, $m);
-$uri_match_index = preg_match("/^\/index\.([a-zA-Z0-9_-]+)$/", $uri);
-$date = $uri_match_date ? $m[1] : date('Y-m-d');
+$uri_match_date = preg_match("/^.*\/([\d]{4}(-|\.)[\d]{2}(-|\.)[\d]{2})\.([a-zA-Z0-9_-]+)$/", $uri, $m);
+$uri_match_index = preg_match("/.*^\/index\.([a-zA-Z0-9_-]+)$/", $uri);
+//$date = $uri_match_date ? $m[1] : date('Y-m-d');
+$date = $uri_match_date ? $m[1] : date('Y.m.d');
 $format = $uri_match_date && in_array($m[2], $valid_formats) ? $m[2] : "html";
+//var_dump($uri, $uri_match_date, $uri_match_index, $format);
 
 // Load log file for given date
-$logprefix = $channel;
+//$logprefix = $channel;
+$logprefix = '';
 $lines = array();
-if($date && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $date)) {
-    $filename = $logdir.'/'.$logprefix.'.log.'.$date;
+if($date && preg_match("/^[\d]{4}(-|\.)[\d]{2}(-|\.)[\d]{2}$/", $date)) {
+    $filename = date_to_log_filename($logdir, $logprefix, $date);
+    //var_dump($filename);
     $lines = file_exists($filename) ? file($filename) : null;
     $subtitle = " ".$date;
 }
@@ -48,12 +52,12 @@ if($format == "txt") {
     header("Content-Type: text/html");
     if($uri_match_date && count($lines)) {
         header("HTTP/1.0 200 Okay");
-        include("views/date.html.php");
+        require("views/date.html.php");
     } else if($uri_match_index) {
         header("HTTP/1.0 200 Okay");
-        include("views/index.html.php");
+        require("views/index.html.php");
     } else {
         header("HTTP/1.0 404 Not Found");
-        include("views/index.html.php");
+        require("views/index.html.php");
     }
 }
