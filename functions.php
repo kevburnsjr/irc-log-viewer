@@ -60,7 +60,7 @@ function line_as_html($line, $i, $channel) {
     $line = trim($line,"\r\n");
     $line_classes = array();
     
-    $line = htmlspecialchars($line);
+    $line = htmlspecialchars($line, ENT_QUOTES, 'UTF-8');
     
     if(preg_match("/^[^\s]+ Action: ([^\s]+)/",$line,$m)) {
         $line = substr($line, 0, 8).substr($line, 16);
