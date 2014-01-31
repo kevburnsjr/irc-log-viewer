@@ -2,7 +2,15 @@
     include 'header.html.php';
 
     $files = array_slice(scandir($logdir), 2);
+    foreach ($files as $file) {
+        //var_dump($file);
+        if (is_valid_log_filename($file, $logprefix)) {
+            $tmp[] = $file;
+        }
+    }
+    $files = $tmp;
     foreach ($files as $i => $file) {
+        //if($file == $logprefix.'.log.'.$date) {
         if ('/'.$file == date_to_log_filename('', $logprefix, $date)) {
             $prev = $i > 0 ? log_filename_to_date($files[$i-1], $logprefix) : '';
             $next = $i < count($files)-1 ? log_filename_to_date($files[$i+1], $logprefix) : '';
