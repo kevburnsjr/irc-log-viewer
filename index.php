@@ -14,9 +14,9 @@ require_once 'functions.php';
 $host    = getenv('APP_HOST')    ? getenv('APP_HOST')    : $_SERVER['HTTP_HOST'];
 $channel = getenv('APP_CHANNEL') ? getenv('APP_CHANNEL') : "rest";
 $network = getenv('APP_NETWORK') ? getenv('APP_NETWORK') : "irc.freenode.net";
-//$logdir  = getenv('APP_LOGDIR')  ? getenv('APP_LOGDIR')  : dirname(__FILE__)."/sample-logs";
-$logdir  = dirname(__FILE__).'/logs';
+$logdir  = getenv('APP_LOGDIR')  ? getenv('APP_LOGDIR')  : dirname(__FILE__)."/sample-logs";
 $gacoe   = getenv('APP_GACODE');
+//var_dump($host, $channel, $network, $logdir); exit;
 
 $title = "#{$channel} on {$network}";
 $subtitle = "";
