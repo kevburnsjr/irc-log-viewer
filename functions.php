@@ -98,7 +98,7 @@ function line_as_html($line, $i, $channel)
     $classes = implode(' ', $line_classes);
     $classes = $classes ? ' class="' . $classes . '"' : '';
 
-    $html = "<li id='{$i}'{$classes}>{$line}</li>";
+    $html = "<li id='{$i}'{$classes}>{$line}</li>\n";
 
     return $html;
 }
