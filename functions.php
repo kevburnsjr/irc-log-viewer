@@ -93,7 +93,8 @@ function line_as_html($line, $i, $channel)
         }
     }
 
-    $line = preg_replace("/^\[([\d]{2}):([\d]{2})\](.*)/", "<span class='ts'>[\\1:\\2]</span><span class='t'>\\3</span>", $line);
+    //$line = preg_replace("/^\[([\d]{2}):([\d]{2})\](.*)/", "<span class='ts'>[\\1:\\2]</span><span class='t'>\\3</span>", $line);
+    $line = preg_replace("/^([\d]{2}):([\d]{2}):([\d]{2})(.*)/", "<span class='ts'>[\\1:\\2]</span> <span class='t'>\\4</span>", $line);
 
     $classes = implode(' ', $line_classes);
     $classes = $classes ? ' class="' . $classes . '"' : '';

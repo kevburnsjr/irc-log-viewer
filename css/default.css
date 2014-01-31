@@ -42,7 +42,7 @@ ul.lines { position: absolute; top: 35px; right: 32px; bottom: 20px; left: 20px;
 ul.lines { clear: both; border: 3px solid #bbb; border-top: 0; overflow: scroll; overflow-x: hidden; margin: 0; background: #fff; }
 ul.lines li { list-style: none; font-family: "Courier New",monospace; font-weight: normal; line-height: 1.6em; font-size: 1.1em; clear: left; background: #eee; }
 ul.lines li:hover span.t, ul.lines li.hover span.t { background: #efe; }
-ul.lines li span { font-weight: bold; }
+ul.lines li span.name { font-weight: bold; }
 
 ul.lines li.action span.t { color:#9C009C; }
 ul.lines li.nickchange span.t { color:#aaa; }
