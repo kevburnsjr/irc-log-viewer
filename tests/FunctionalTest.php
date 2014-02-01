@@ -31,4 +31,11 @@ class FunctionalTest extends PHPUnit_Framework_TestCase
         $expected = file_get_contents(__DIR__.'/html/2010-02-12.html');
         $this->assertEquals($expected, $test);
     }
+
+    public function test_2010_02_12_txt()
+    {
+        $test = file_get_contents(static::BASEURL . '2010-02-12.txt');
+        $expected = file_get_contents(__DIR__.'/html/2010-02-12.txt');
+        $this->assertEquals($expected, $test);
+    }
 }

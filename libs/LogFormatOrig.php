@@ -66,7 +66,7 @@ class LogFormatOrig extends LogFormat
         $classes = implode(' ', $line_classes);
         $classes = $classes ? ' class="' . $classes . '"' : '';
 
-        $html = "<li id='{$i}'{$classes}>{$line}</li>\n";
+        $html = "<li id='{$i}'{$classes}>{$line}</li>";
 
         return $html;
     }
