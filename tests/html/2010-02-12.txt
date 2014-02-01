@@ -1,0 +1,293 @@
+[04:40] RestBot joined #rest.
+[04:49] <KevBurnsJr> logs
+[04:49] <KevBurnsJr> http://rest.hackyhack.net/
+[04:49] <KevBurnsJr> updated every 5 mins or so
+[06:00] algermissen (~algermiss@p54905732.dip.t-dialin.net) joined #rest.
+[06:30] <KevBurnsJr> http://rest.hackyhack.net/12Feb2010.html
+[06:51] <algermissen> ah - good idea. So I do not need to keep the chat open to get the transcripts :-)
+[06:51] <KevBurnsJr> Now you have RestBot
+[06:57] algermissen (algermiss@p54905732.dip.t-dialin.net) left #rest.
+[08:05] KevBurnsJr (KevBurnsJr@c-69-181-187-21.hsd1.ca.comcast.net) left irc: 
+[08:22] algermissen (~algermiss@p54905732.dip.t-dialin.net) joined #rest.
+[12:28] <mikekelly> :-)
+[12:28] <mikekelly> cool
+[13:17] darrelmiller (~chatzilla@bas4-montreal45-1279574616.dsl.bell.ca) joined #rest.
+[13:18] <algermissen> question of the day: when you evolve a RESt service - *how* do you know what you *can change and what is it you can change?
+[13:22] <mikekelly> you can't change established entry points or hypertext mechanisms
+[13:23] <mikekelly> everything else should be ok
+[13:24] <algermissen> what is a hypertext mechanism?
+[13:24] <mikekelly> <a href="foobar">
+[13:24] <mikekelly> <img src="bla.jpg">
+[13:24] <darrelmiller> Surely you can change that to <a href="newfoobar"/>
+[13:25] <mikekelly> the mechanism itself..
+[13:25] <mikekelly> hypertext mechanisms are just the established means by which your media types enable hypertext..
+[13:26] <mikekelly> oh and I forgot the small matter of the protocol :D
+[13:26] <darrelmiller> I would say in <link rel="blah" href="blah/blah"/>  You cannot change the rel value to something new and expect a client to use it..
+[13:27] <mikekelly> .. sure you can if that's what you want to do
+[13:28] <mikekelly> obviously if you change the rel value you cut off any logic associated with that rel type
+[13:28] <darrelmiller> ...and expect a client to use it without some kind of update to the client. :-)
+[13:29] <mikekelly> that's an application specific choice though - maybe you want that to happen
+[13:30] <mikekelly> in practice you would almost always just add another link relation
+[13:30] <mikekelly> rather than change an existing one
+[13:34] <mikekelly> but overall you're fixed with your entry points and any standardised ways of expressing hypertext in your media-types
+[13:36] <darrelmiller> Isn't pretty much everything about the media type fixed and unchangeable, not just the hypermedia.  If the media type spec says that the content must contain a data element "foo", then is that not fixed in stone.
+[13:41] <mikekelly> depends how good your media type is
+[13:41] <mikekelly> xhtml doesn't work that way
+[13:41] <mikekelly> rather it does work that way and doesn't experience that limitation
+[13:45] <darrelmiller> I am not precluding the fact that it is possible to define media types that are very flexible and have very few rules, but that does not mean we can change the rules that do exist.  I.e.  You can't suddenly decide you are going to use curly braces instead of angle brackets as tag delimiters in xhtml.
+[14:11] <mikekelly> fair enough, that's just something I take as a given
+[15:12] Action: mamund checks in
+[15:14] <mikekelly> afternoon :))
+[15:14] <mikekelly> jsled: might be an idea to put something up in the channel topic about the channel being logged
+[15:14] <jsled> oh, good idea.
+[15:14] bradley-holt (~chatzilla@65-183-135-35-dhcp.burlingtontelecom.net) joined #rest.
+[15:14] <jsled> is there some sort of "[off]" annotation to go off-log?
+[15:15] <jsled> Ah, KevBurnsJr isn't around.
+[15:15] <jsled> RestBot: help
+[15:15] <jsled> :(
+[15:15] <mikekelly> it's the FBI
+[15:15] <jsled> gah.  dreadful styling on the log.
+[15:16] <jsled> OMG, <font face='tahoma'> on every line?  wtf?
+[15:20] <mikekelly> beggars can't be choosers
+[15:20] <mikekelly> can we?
+[15:22] <mikekelly> ramsey: that chrome status thing should work out of the box
+[15:22] <mikekelly> if you mouse over it should pop-up bottom left
+[15:28] <darrelmiller> Ok, this twitter / IRC is starting to confuse me.   Where am I?
+[15:30] <MrMojoRisin> darrelmiller: MSN :P
+[15:30] <mikekelly> :D
+[15:30] <jsled> clearly you need a irc/twitter bridge bot, then you can just spend your time in IRC. :)
+[15:30] <mikekelly> that would be fking sweet :))
+[15:31] <darrelmiller> Is there a decent IRC client for windows.  I'm using Chatzilla at the moment but I hate having to open Firefox just so I can use Chatzilla.
+[15:31] <mikekelly> mIRC
+[15:32] <mikekelly> does nonamescript still exist?
+[15:32] <jsled> xchat
+[15:32] <mikekelly> yeah or xchat of course :-)
+[15:32] <darrelmiller> They want me to pay for mIRC.  That was the straw that broken the camel's back :-)
+[15:32] <jsled> mikekelly: bitlebee + something like tweet.im
+[15:32] <jsled> bitlbee, even
+[15:32] <mikekelly> or you could be super duper cool and use irssi in a terminal window
+[15:33] <jsled> (+ dircproxy, and you can be asynchronous+persistent)
+[15:33] <jsled> (+multi-client)
+[15:33] <mikekelly> used to be psybnc for me
+[15:33] <mikekelly> I just have a shell + screen + irssi now
+[15:55] <mamund> mikekelly: that's totally the way to go.
+[16:01] bradley-holt (~chatzilla@65-183-135-35-dhcp.burlingtontelecom.net) left irc: Ping timeout: 245 seconds
+[16:01] <mamund> my account is w/ nullshells.net 2USD/mo irssi and 1 screen session...
+[16:01] <mamund> they sell more options, but this is all i use
+[16:02] <mamund> on my windows stations i use putty to ssh into nullshells
+[16:02] bradley-holt (~chatzilla@65-183-135-35-dhcp.burlingtontelecom.net) joined #rest.
+[16:03] bradley-holt (~chatzilla@65-183-135-35-dhcp.burlingtontelecom.net) left irc: Client Quit
+[16:09] <mikekelly> wow... http://www.ebpml.org/blog/213.htm
+[16:09] <mikekelly> o.O
+[16:12] <mamund> mikekelly: i admire jj dubary's passionate skepticism about Fielding's work and REST in general, but i don't share it.
+[16:12] <mamund> s/dubary/dubray
+[16:24] <mamund> KevBurnsJr: thanks for setting up the RestBot! 
+[16:25] <jsled> he does't seem to be around.
+[16:25] #rest: mode change '+o jsled' by ChanServ!ChanServ@services.
+[16:25] Topic changed on #rest by jsled!jsled@pdpc/supporter/bronze/jsled: Representational State Transfer | http://en.wikipedia.org/wiki/Representational_State_Transfer | http://tech.groups.yahoo.com/group/rest-discuss/ | logged channel: http://rest.hackyhack.net/
+[16:25] #rest: mode change '-o jsled' by ChanServ!ChanServ@services.
+[16:30] <mamund> algermissen: on the "topic of the day": essentially, you can change everything - that's the whole point, really..
+[16:31] <mamund> but in some cases, these changes need to be indicated in the control data (headers in HTTP) so that clients can see the changes early and adjust accordingly.
+[16:32] <mamund> jsled: yeah, but i figure he'll read it in the archive<g>.
+[16:59] <mikekelly> :-)
+[17:47] bradley-holt (~chatzilla@65-183-135-35-dhcp.burlingtontelecom.net) joined #rest.
+[17:57] KevBurnsJr (~kevburnsj@c-67-161-65-81.hsd1.ca.comcast.net) joined #rest.
+[18:02] <KevBurnsJr> jsled: no off-record for the moment.  
+[18:02] <KevBurnsJr> This is an old eggdrop I reappropriated.
+[18:03] <KevBurnsJr> I probably don't need to tell you that <font face='tahoma'> is an artifact of some teeny irc log viewer app I scraped of the web and manhandled into place.
+[18:07] <KevBurnsJr> I'll make it a weekend project to clean up the log viewer.
+[18:09] <KevBurnsJr> Also I'll see what I can do about enabling a help menu, allowing for off-record discussion and adding a notification on join to let people know the channel is logged.
+[18:19] <jsled> KevBurnsJr: first off, thanks much!
+[18:20] <jsled> KevBurnsJr: fwiw, I have a python script that will convert (supybot) channel logger output into e.g. http://wiki.gnucash.org/logs/2010/02/2010-02-01.html
+[18:20] <jsled> if that's useful.  The chanlog format parsing can't be more than a few minutes work to massage for another non-insane format.
+[18:21] <jsled> http://svn.gnucash.org/trac/browser/meta/scripts/irc_log_htmlizer.py actually
+[18:41] <mamund> there's a service that archives some other spec-related channels. (what-wg, etc.)
+[18:41] <mamund> wonder if we can get them to archive this one?
+[18:47] <mamund> seems like a pretty sweet archive http://krijnhoetmer.nl/irc-logs/
+[19:56] <algermissen> member:algermissenon the "topic of the day": essentially, you can change everything - I actually think that the fact that servers expose addressable application states separates what *can* be kept stable from what *cannot* be guarranteed to be kept stabe
+[19:56] <algermissen> in such a brilliant way that the server ownder actually cannot change very many things about the service *BUT* at the same time it feels as it she had almost complete freedom.
+[19:56] <algermissen> Thats sort of magical!
+[19:57] <algermissen> IOW, we allways *think* the server is so flexible but when you think about what you can actually *change* (and not *add*) there isn;t really much.
+[19:58] <algermissen> Yes, you can take a link away but given the server owns the application that is not to wonder.
+[19:59] <algermissen> I can as well decide to have item.order() to fail if the item is out of stock. The OO interface does not guarrantee it is in stock
+[19:59] <algermissen> ---
+[20:00] <mamund> algermissen: we might be talking abt diff things. i change stuff in my server apps quite frequently w/o breaking my clients
+[20:00] <algermissen> i find it to be very amazing if you approach rest from the application state POV and not from the interaction/hypermedia POV)
+[20:01] <algermissen> yes, but you cannot change in the same way an OO interface can change. That thing can completely change. I can even disappear. A steady state resource should noy doasppear but be coooool
+[20:02] <mamund> not sure i follow this last part WRT OO 
+[20:02] <algermissen> OO is far less constrained when it comes to change
+[20:02] <algermissen> nothing in OO says so much about what connot be done when evolving the API as REST does
+[20:03] <mamund> hmmm.. i guess that's true. i am not up on my OO principles.
+[20:03] <algermissen> REST: interface must be stable (uniform), resource semantics must be stable, rsources must be cool
+[20:03] <algermissen> in OO, if you change the interface you just change it. There is no constraint on how you change it
+[20:03] <algermissen> funny, eh?
+[20:04] <algermissen> but rest mandates those things to be stable that are painless to keep stable
+[20:04] <algermissen> juggle that in your head - amazing actually
+[20:05] <mamund> i suspect that is (at least in part)  because REST is an arch style and OO is a programming style.
+[20:08] <mamund> but - if i follow you - your point is about the constraints entworked apps (REST arch'ed) have on the public interface, right?
+[20:12] <mamund> what i find challenging is identifying the public interface for HTTP/REST apps.... 
+[20:12] <mamund> it's not just the list of callable methods...
+[20:13] <mamund> the control data and the body are also part of this interface. esp. in the case of the media-type... 
+[20:14] <mamund> that is why changing some aspects of media-type or control data will result in breaking the client and are, therefore, changage that are 'not allowed'
+[20:17] <algermissen> Well, if you change the media type semantics in an incompatible way you need anew media type
+[20:19] <algermissen> what I find interesting is that REST explicitly addresses the temporal aspect of an API. REST says some things pertaining to evolution. No other style or technique does that
+[20:21] <algermissen> its is a bit as if the OO world was lacking a dimension (the temporal)
+[20:21] <algermissen> it is all static in time
+[20:22] <algermissen> REST focusses on dynamics and constrains certain things to be stable over time
+[20:22] <algermissen> so, the interesting things about the uniform interface is probably not that it is uniform across all resources but that it is uniform overtime
+[20:22] <algermissen> hmmm
+[20:24] <algermissen> in  a way the situation is strange - there is really only one guy on earth to ask whether sth like the above is clear and true or just crap
+[20:24] <algermissen> (I recall quite some occasions where it showed that even Mark hat a very different understanding that Roy)
+[20:26] <mamund> i agree that Roy's work was clear in addressing the aspect of time - makes sense in a widely dist network app environment...
+[20:26] <algermissen> wonders whether he had yet another aha moment or is just dump as bread and babbling :-)
+[20:26] <mamund> not sure if he was the first or last (another thing to research)
+[20:26] <mamund> heheheh
+[20:26] <mamund> you're cool
+[20:26] <mamund> babble if you must, but keep talking!
+[20:27] <algermissen> shouldn't every web user give a buck to fund the Grand REST Questions Research community (which would be us? Harr harr)
+[20:27] <jsled> heh
+[20:27] <mamund> one of the things i appreciate about the HTTP spec is that the body of the message can be a single element/blob (XML document, image, etc.)  or a set of name/value pairs (form-urlencoded data)
+[20:28] <algermissen> I'd even say that job would be better than Director of the W3C
+[20:28] <mamund> more interesting maybe, more prone to derission, too, i suspect.
+[20:28] <algermissen> yes, the orthogonality is taken to the extreme - and that is goodness
+[20:29] <mamund> that orthagonality is operational goodness and also the source of much confusion
+[20:30] <algermissen> yep. public void invoice.pay() is far less discussable
+[20:51] ramsey (~ramsey@unaffiliated/ramsey) left irc: Quit: Changing server
+[20:52] <mamund> or from the client-side: currentResourceRepresentation.getLink("pay").postState(userAccount,encryptedCreditCard)
+[20:53] ramsey (~ramsey@unaffiliated/ramsey) joined #rest.
+[22:14] ramsey (~ramsey@unaffiliated/ramsey) left irc: Quit: leaving
+[22:14] ramsey (~ramsey@unaffiliated/ramsey) joined #rest.
+[22:14] ramsey (~ramsey@unaffiliated/ramsey) left irc: Client Quit
+[22:14] ramsey (~ramsey@unaffiliated/ramsey) joined #rest.
+[22:42] <mikekelly> hmm
+[22:43] <mikekelly> am I crazy thinking that content negotiation can make use of other headers than just Accept*
+[22:43] <algermissen> what do you mean?
+[22:44] <algermissen> Ah, see you wrote Accept*
+[22:44] <algermissen> no, Accept* is how the client expresses its capabilities
+[22:45] <algermissen> but note difference between client driven conneg and server driven conneg
+[22:45] <mikekelly> it's still negotiation if you vary representation based on User-Agent header for example
+[22:45] <algermissen> client driven is when client makes the choice. either by choosing after a 300 Multiple Choices
+[22:45] <algermissen> or by chosing based on a link's type header
+[22:46] <mikekelly> yeah client driven conneg is really just hypertext
+[22:46] <algermissen> with the benefot of providing far better visibility (client gets to know the URIs of the variants)
+[22:46] <mikekelly> bleh
+[22:46] <mikekelly> that's not more visible dude..
+[22:47] <mikekelly> it's less visible really :-)
+[22:47] <mikekelly> you have representations of a resource exposed as separate resources
+[22:48] <algermissen> why is knowing the URI of a variant not more visible than just knwoing it is a variant of a negotiated resource?
+[22:48] <mikekelly> well it's definitely not more
+[22:48] <mikekelly> and I would argue it's less
+[22:48] <mikekelly> since..
+[22:48] <mikekelly> you have representations of a resource exposed as separate resources
+[22:48] <algermissen> no - they are usualy separate resources!
+[22:49] <mikekelly> well then there is no negotiation taking place at all..
+[22:49] <mikekelly> :)
+[22:49] <algermissen> ???
+[22:49] <mikekelly> well if they aren't the same resource.. how are you negotiating them?!
+[22:50] <algermissen> conneg is just the selection of the most approprate representation. Could well involve a redirect
+[22:50] <mikekelly> representaiton..
+[22:50] <mikekelly> so they are the same resource..
+[22:50] <mikekelly> no?
+[22:50] <algermissen> who cares?
+[22:50] <mikekelly> :)
+[22:50] <mikekelly> I do - it's less visible.
+[22:51] <algermissen> if I do PUT [some json] to /foo and the server says PUT that to foo.json please
+[22:51] <mikekelly> cache invalidation.
+[22:51] <algermissen> then all it is saying is that /foo is a negotiated resource and that it wants me to update the json resource and not the negotiated one
+[22:52] <mikekelly> I understand how that works
+[22:52] <mikekelly> I just contest that it is 'more visible'
+[22:52] <mikekelly> it's only humans that give a shit about plain text URIs
+[22:52] <algermissen> knowing more about the URI space == more visible
+[22:53] Action: mamund chimes in: client-selected can be more accurate, but it requires extra trips.
+[22:53] <mikekelly> you don't know more you know less
+[22:55] <mamund> mikekelly: to your point, according to HTTP/1.1 spec, you can use other headers, even non-header info when doing server-driven conneg 
+[22:55] <mikekelly> yeah ok good :))
+[22:55] <mamund> well, outside "request header fields" is the quote: http://www.w3.org/Protocols/rfc2616/rfc2616-sec12.html#sec12.1
+[22:55] <mikekelly> hence definition of Vary mechanism
+[22:56] <mamund> yep Vary is the "wildcard" to explain the server's algorithm to clients/caches
+[22:59] <mikekelly> I say that only because of that twitter convo about client-specific media types
+[23:00] <mamund> i don't get that "client-specific media-types" what's that about?
+[23:03] <mikekelly> @AndrewWahbe "What you want is: application/<type-of-client>+xml" do you mean application/ria+xml?
+[23:06] <mamund> yeah - that's why i asked. seems a peculiar notion to me.
+[23:07] <mamund> also, i quoted the GET side-effect thing since ian robinson and i had an email discuss on that today. 
+[23:15] <algermissen> gave up on search for a quote by roy on visibility
+[23:16] <mamund> algermissen: what were you looking for (search-wise?)
+[23:16] <algermissen> "negotiated resource" visibility PUT
+[23:16] <algermissen> it was an answer by roy where he says that visibility is improved if clients know the URIs of the variants
+[23:17] <algermissen> I hate it that rest and fielding are such common terms in non REST web pages :-)
+[23:17] <algermissen> some stuff is really hard to find
+[23:18] <mamund> this thread maybe: http://ftp.ics.uci.edu/pub/ietf/http/hypermail/1996q2/0603.html
+[23:18] <algermissen> the other day I scanned the whole of the FoRK archives for older RESt stuff - massive amount of work 
+[23:19] <algermissen> no - but still good
+[23:19] <mamund> algermissen: might need a new repository that offers not only searching, but auto-tagging of key words for quite cross-index
+[23:19] <mamund> that thread has some nice stuff, IIRC
+[23:32] <algermissen> unrelated but want to share - found this http://markmail.org/message/4gkibjeoccbjp3wx
+[23:32] <algermissen> "POST is always an attempt to store state.  It is the response that
+[23:32] <algermissen> tells you whether the state has been stored."
+[23:36] <mamund> algermissen: huh - compact post w/ a number of tidbits
+[23:36] <mamund> "Creating new unsafe
+[23:36] <mamund> actions that do the same as what POST has already been defined
+[23:37] <mamund> to do is absurd."
+[23:37] <mamund> hehe - PATCH comes to mind.
+[23:38] <algermissen> but PATCH is idempotent while POST is not
+[23:38] <algermissen> hmm, is it idempotent? I guess only with an etag
+[23:38] <algermissen> goes and checks
+[23:39] <mamund> "Because the target URI knows what type of collection it is and how to process POST requests." ergo: POST is a wildcard and server knows what that means.
+[23:39] <mamund> "The media type tells the recipient how to process the message given the method semantics." this works for both client and server.
+[23:39] <algermissen> http://rest.blueoxen.net/cgi-bin/wiki.pl?HttpMethods
+[23:40] <algermissen> yes, POST is wildcard but here is the tricky question: why is rest (POST and GET and DELET and PUT) better than messaging (only POST)?
+[23:41] <mamund> http://tools.ietf.org/html/draft-dusseault-http-patch-16#section-2 "PATCH is neither safe or idempotent..."
+[23:41] <mamund> algermissen: what is your Q?
+[23:42] <algermissen> my answer: taking some methods that could be done with POST but that still have uniform semantics out of POST and making them distinct ones brings advantages such as cachcing and idempotency
+[23:43] <algermissen> Q was: if you are asked why using RESt is better than using messaging what do you answer? if POST can be used for everything, why not do that but have several methods instead?
+[23:43] <mamund> ahhh
+[23:43] <mamund> ok
+[23:44] <mamund> my first answer is that GET/POST dichotomy means caching is possible. not possible w/ only POST
+[23:44] <algermissen> i think it is sometimes hard to come up with an architecturally grounded reasoning as opposed to "RESt is better because....it is just better?"
+[23:45] <mamund> next answer is (as i think you wrote here) POST ("write") can be futher broken down into idempotent/non-idempotent (PUT/POST)
+[23:45] <algermissen> yep, true. having GET adds visibility. POST has visibility zero
+[23:45] <mamund> finally, DELETE is an optimization since it is a "write" action w/ no body.
+[23:45] <mamund> also important to point out that this method talk (focusing on these four) as HTTP, not REST
+[23:46] <algermissen> an be futher broken down into idempotent/non-idempotent (PUT/POST) - yep. idempotency is good, cache invalidation on PUT and Delete is also good
+[23:46] <darrelmiller> Algermissen: Having only POST would make intermediaries almost useless, other than for logging.
+[23:46] <algermissen> darrelmiller: yep
+[23:47] <algermissen> HTTP not REST: ja ja ja  :-)
+[23:49] <darrelmiller> When you guys talk about a transient state, are you referring to when a client requests a representation and it gets back a redirect?
+[23:49] <algermissen> and this is why if you have domain operations that match the semantics of some non-POST method then use those and not POST
+[23:50] <mamund> darrelmiller: in my POV transient state transitions are ones that are good only briefly usually due to context dependencies...
+[23:50] <algermissen> must say I not quite understand what Mike means by transient state exactly..
+[23:51] <darrelmiller> No, I'm really not sure I grasp the concept.
+[23:51] <mamund> so a redirect itself is not a transient state, but a URI presented to a client that is a single-use URI or one that will only be vlaid for limitmed time _is_ a transient state transition
+[23:51] <mamund> hey, i could be talking from a really dark place on this<g>. i'm working it out in my mind.
+[23:51] <mamund> feel free to beat me up - it helps knock the nonesense out
+[23:52] <darrelmiller> If I POST an entity to  /printers/ColourPrinter and I get back a link to a representation of its state in the print queue.  Would you consider that transient?
+[23:52] <mamund> this line of reasoning relates to the notion of steady-state start/end
+[23:52] <mamund> darrelmiller: no
+[23:53] <algermissen> mike - have an example?
+[23:53] <mamund> i really am on the hook for some prose on this, right?
+[23:53] <darrelmiller> If I have a query with a gazzillion parameters and I do POST to /QueryEngine and it returns a redirect to /Query/2343243 which is there just so I can do a GET on it to get the results, is that transient state?
+[23:53] Action: mamund shuffles papers loudly in effort to snowball listeners...
+[23:54] <darrelmiller> hahah
+[23:54] <algermissen> dunno - maybe flesh out issue here and see what else we uncover
+[23:54] <mamund> yeah - i need to produce some examples for you folks to check out
+[23:55] <algermissen> response body of a POST puts client in a new app state (yes?)
+[23:55] <mamund> the vases i have in mind have to do w/ interactions that require more than one step, but these steps are context-dependent
+[23:55] <algermissen> but that state has no URI!
+[23:55] <algermissen> some maybe that is transient?
+[23:55] <algermissen> the steps are media type dependent, eh?
+[23:56] <mamund> mt is not a player in the case i have in mind
+[23:56] <darrelmiller> Is that kosher?  To return a body from a POST that has no valid Content-Location?
+[23:56] <mamund> no reason you cannot return 200 + body for a POST
+[23:56] <darrelmiller> Ok, I think I know what you mean...
+[23:57] <darrelmiller> Imagine modeling a wizard UI.  You get the first representation and you get a next link back.
+[23:57] <mamund> yes - wizard is a good exmple
+[23:57] <algermissen> its kosher
+[23:57] <mamund> a bit UI-centric, but still good
+[23:58] <darrelmiller> Then you manipulate the representation and you follow the next link to the next step
+[23:58] <mamund> consisder a case where the selections made in each step affect the next representation state...
+[23:58] <mamund> you might not want to allow clients to treat any interim URIs as "steady-state" start points
+[23:59] <mamund> granted, sometimes you _might_ want that (e.g. i got this far in their stupid waizard and gave up! i'll come back later.)
+[23:59] <algermissen> how could I? they are addressable app state
+[23:59] <mamund> well, the URI might be 'marked' as transient
+[01:35] Nick change: algermissen_ -> algermissen
+[00:00] --- Sat Feb 13 2010
