@@ -5,7 +5,11 @@ mb_language('ja');
 mb_internal_encoding('UTF-8');
 //setlocale(LC_ALL, 'ja_JP.UTF-8');
 
-require_once 'functions.php';
+require './libs/LogFile.php';
+require './libs/LogManager.php';
+require './libs/LogFormat.php';
+require './libs/LogFormatOrig.php';
+require './libs/LogFormatTiarra.php';
 
 // SetEnv APP_CHANNEL rest
 // SetEnv APP_NETWORK irc.freenode.net
@@ -26,20 +30,23 @@ $baseurl = "http://".$host."/";
 // Parse URL
 $uri = $_SERVER['REQUEST_URI'];
 $valid_formats = array("html","txt");
-$uri_match_date = preg_match("/^.*\/([\d]{4}(-|\.)[\d]{2}(-|\.)[\d]{2})\.([a-zA-Z0-9_-]+)$/", $uri, $m);
+$uri_match_date = preg_match("/^.*\/([\d]{4}-[\d]{2}-[\d]{2})\.([a-zA-Z0-9_-]+)$/", $uri, $m);
 $uri_match_index = preg_match("/.*^\/index\.([a-zA-Z0-9_-]+)$/", $uri);
-//$date = $uri_match_date ? $m[1] : date('Y-m-d');
-$date = $uri_match_date ? $m[1] : date('Y.m.d');
+$date = $uri_match_date ? $m[1] : date('Y-m-d');
 $format = $uri_match_date && in_array($m[2], $valid_formats) ? $m[2] : "html";
-//var_dump($uri, $uri_match_date, $uri_match_index, $format);
+//var_dump($uri, $uri_match_date, $uri_match_index, $format); exit;
+
+// for Original sample logs
+$logFormat = new LogFormatOrig($channel);
+// for Tiarra logs
+//$logFormat = new LogFormatTiarra('');
+
+$logManager = new LogManager($logdir, $logFormat);
 
 // Load log file for given date
-//$logprefix = $channel;
-$logprefix = '';
 $lines = array();
-if ($date && preg_match("/^[\d]{4}(-|\.)[\d]{2}(-|\.)[\d]{2}$/", $date)) {
-    $filename = date_to_log_filename($logdir, $logprefix, $date);
-    //var_dump($filename);
+if ($date && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $date)) {
+    $filename = $logManager->getLogFileNameFromDate($date);
     $lines = file_exists($filename) ? file($filename) : null;
     $subtitle = " ".$date;
 }
