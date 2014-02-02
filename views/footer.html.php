@@ -1,5 +1,5 @@
     </div>
-<? if($gacoe) { ?>
+<?php if ($gacoe) { ?>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -8,7 +8,7 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
 try {
 var pageTracker = _gat._getTracker("<?=$gacoe?>");
 pageTracker._trackPageview();
-} catch(err) {}</script>
-<? } ?>
+} catch (err) {}</script>
+<?php } ?>
 </body>
 </html>

@@ -1,0 +1,277 @@
+[00:00] <mamund> timestamp, etc.
+[00:00] <algermissen> what is the reason to provide several states if the states are not significant?
+[00:00] <mamund> attempts to replay the bookmark might results in 404 or a redirect to start again
+[00:00] <darrelmiller> I have a pattern that I use regularly call a "Sandbox" that is a subresource of some other resource.  I allow the user to manipulate the resource and post it back to the sandbox.  This allows the server to do preliminary validation and progressive disclosure on the resource.  Nothing is stored to the backend database until the use actually does a PUT on the real resource.
+[00:01] <mamund> algermissen: states might be significant, but not replay-able
+[00:01] <darrelmiller> I would definitely consider the returned entity "transient" as there is no permanent record of it on the server, but it does not have an identifying URL.
+[00:02] <mamund> darrelmiller: that might be the same idea, but maybe we're not quite thinking along the same lines
+[00:03] <darrelmiller> I'm curious about your "a bit UI-centric" comment.  I see REST interfaces as being all about UI content.  
+[00:03] <darrelmiller> I think when people try and expose REST interfaces at any other layer, they run into all sorts of problems.
+[00:04] <mamund> darrelmiller: i am also thinking of cases where i don't control the UI and the client might want to present things differently...
+[00:04] <mamund> desktop app, console app, browser app, ajax-ified browser app - they all might choose diff UI
+[00:05] <mamund> algermissen: you make a good point - not sure i answered sufficiently
+[00:05] <darrelmiller> I actually see all of those as different REST APIs
+[00:06] <darrelmiller> Take desktop versus mobile.  You definitely do not want to try and display as much content on a desktop ui as  mobile.  So to mean you are showing a different resource.
+[00:06] <darrelmiller> oops.  I mean the other way around.  More on desktop, less on mobile.
+[00:07] <mamund> yeah, diff workflows might require diff resources. this is another key point.
+[00:08] <algermissen> mamund: you mean that there are app states that 'go away', yes?
+[00:09] <darrelmiller> I think this relates back to Andrew Wahbe's point that the media type has everything to do with the client and not with the server.
+[00:09] <algermissen> never grasped what he means...
+[00:10] <mamund> yes - app states that make sense in the moment (temporally), but will not make sense later
+[00:10] <mamund> here's what got me started on this idea: http://code.google.com/p/implementing-rest/wiki/RESTfulSystem
+[00:11] <algermissen> mamund: I think it is a design issue! The wizard-style should be done this way: create a resource with POST (e.g. user account) then add to that resource with more request but 303 the cliet back to primary resource.
+[00:11] <algermissen> trying to dig up a post by roy where he describes that
+[00:11] <darrelmiller> mamund:  Can you go further and say that transient states should only be visible to the one user?
+[00:11] <mamund> algermissen: the link to that post is on the page there.
+[00:12] <mamund> darrelmiller: yes, only to one user _and_ only at that particular time. same user later, would not be valid
+[00:13] <mamund> algermissen: do you think each exposed state (URI) should be a valid start/stop place?
+[00:14] <algermissen> yes!
+[00:14] <darrelmiller> mamund:  therefore, isn't the only way to get to one of those states to POST to some endpoint and the resulting entity NOT have a valid Content-Location URL
+[00:14] <algermissen> here is link: http://tech.groups.yahoo.com/group/rest-discuss/message/9805
+[00:15] <algermissen> start reading below my favorite roy-ism: "Well, if you create a stupid design, it will do stupid things ..."
+[00:15] <algermissen> Think of it instead as a series of individual POST requests that are
+[00:15] <algermissen> building up a combined resource that will eventually be a savings
+[00:15] <algermissen> account when finished. Each of those requests can include parameters
+[00:15] <algermissen> that perform the same role as an ETag -- basically, identifying the
+[00:15] <algermissen> client's view of the current state of the resource. Then, when a
+[00:15] <algermissen> request is repeated or a state-change lost, the server would see
+[00:15] <algermissen> that in the next request and tell the client to refresh its view
+[00:15] <algermissen> of the form before continuing to the next step.
+[00:17] <algermissen> darrelmiller, mamund: I very much like the issue - it touches upon design principles (-> one should not do this and that because...)
+[00:18] <mamund> algermisen: yes, this gets to the some nitty-gritty details, i think. good to hash this out and clear out assumptions, etc.
+[00:20] <algermissen> There is *a lot* behind the redirects that needs exploration. IOW, what is the HTTP-level meaning we can derive from the status codes, headers etc. ... and then hard code into clients (before even touching on the media type semantics)
+[00:20] <mamund> algermissen: re: fielding's post here. do you think he means that each of the subsequent POSTs are valid (re)entry points? that they are each  "steady-state"?
+[00:21] <algermissen> he means that the server allways redirects the client to the primary resource after some detail has been POSTed to it. that way, you only have a single application state: the account
+[00:21] <darrelmiller> I think he is talking about POSTing back to the same processing resource.  The state is captured in what is returned.
+[00:21] bradley-holt (~chatzilla@65-183-135-35-dhcp.burlingtontelecom.net) left irc: Ping timeout: 245 seconds
+[00:21] <mamund> yes, i agree with this notion that the server is the one to provide links to move things forward...
+[00:21] <darrelmiller> yeah, or what Algermissen said.  That works too :-)
+[00:22] <mamund> my focus recently is whether _every_ URI can be a steady-state. and that's why i'm baning on this transient state idea right now
+[00:23] <darrelmiller> I think (and I am really only guessing) that yes every URI is a steady state.
+[00:23] <mamund> darrelmiller: see, and that's my stuggle. i think i have apps that can't fulfill this idea that all URIs are valid entry/exit points - that they can be replayed.
+[00:24] <darrelmiller> Even if a URI has expired and it returns 204 or even 404, is that not a steady state in itself.
+[00:24] <mamund> ahhh....
+[00:24] <algermissen> ->
+[00:24] <algermissen> POST /accounts/
+[00:24] <algermissen> Name: Fred Meier
+[00:24] <algermissen> <-
+[00:24] <algermissen> 201 Created
+[00:24] <algermissen> Location: /acounts/4
+[00:24] <algermissen> <account>
+[00:24] <algermissen>  <name>Fred Meier</name>
+[00:24] <algermissen>  <profession href="/accounts/4/profession"/>
+[00:24] <algermissen> </account>
+[00:24] <algermissen> ->
+[00:24] <algermissen> POST /accounts/4/profession
+[00:24] <algermissen> "Teacher"
+[00:24] <algermissen> <-
+[00:24] <algermissen> there is only one app state: /accounts/4
+[00:25] <mamund> is app state representted by URI?
+[00:25] <darrelmiller> algermissen:  I'm not sure what you mean by "only one app state"
+[00:25] <algermissen> ?? of course 
+[00:25] <algermissen> well - app state is identified by URI
+[00:26] <darrelmiller> For me application state is "from the perspective of the client" . Each client has their own application state.
+[00:26] <darrelmiller> I have always understood that as resource state.
+[00:26] <mamund> algermissen: i see your point. /accounts/4/profession is that a steady state?
+[00:26] <algermissen> No - client was redirected to another state
+[00:27] <mamund> do there is a URI that does not represent steady state?
+[00:27] <algermissen> good point.
+[00:28] <darrelmiller> I like the analogy of driving in a car.  The car is the client and the location, speed and direction of the car is its application state.  The world around it is the resource state.  To say a car's application state has a URI does not make any sense.  Only the world around it can have an address (URI).
+[00:28] <mamund> not sure i have a good point, but it's the puzzlement i experience right now
+[00:28] <algermissen> its about the distinction/rekationship between app state, resource and request uri
+[00:28] <mamund> i think transient states are real, they exist and they are likely a part of all interactions (even in life, not computers)
+[00:29] <algermissen> uuhh - "transient state in life"
+[00:29] <algermissen> if I have a bottle of wine - am I then in a transient state??
+[00:29] <mamund> heheheh
+[00:30] <mamund> my boubon bottle next to me here is about to transition to empty!
+[00:31] <mamund> i am fully prepared to accept that my transient notion is just a side-effect of improper state representation design...
+[00:31] <mamund> just not willing to give that up just yet<g>
+[00:32] <algermissen> Som youd now like to have DELETE /wine/current --> See Other /Loc.: /wine/new    HTTP-refill caopabilities
+[00:32] <mamund> oohhhh - i like that idea
+[00:33] <mamund> HTTP REFILL - new method!
+[00:33] <algermissen> anyway - it struc me a month ago or so that the notion of steady state is very central but often ignored. Your issues relates closely
+[00:33] <algermissen> hehe
+[00:33] <darrelmiller> Ok, you guys are making me think about drinking....must resist.... I know I cannot....
+[00:33] <mamund> hehehe
+[00:34] <mamund> well, for jan, this is pretty late in the evening.
+[00:34] <algermissen> yes - but 2am is about my to-bed-time
+[00:35] <mamund> you go all day, don't you? i don't have your stamina, i think.
+[00:36] <algermissen> well, I take many breaks - driving kids around and the like.
+[00:36] <mamund> yeah - long days, tho.
+[00:38] <mamund> so, i need to sort out my assertion about transient states. i'll work up a blog post this week and you guys can give it a careful review.
+[00:38] <mamund> i appreciate the feedback. 
+[00:38] <darrelmiller> Does anyone know if Roy or Mark Baker are planning to attend WS-REST?
+[00:38] <mamund> not heard
+[00:39] <mamund> i'll be there
+[00:39] <darrelmiller> Mark is a really nice guy.  I got to meet him a couple of years ago.
+[00:41] <darrelmiller> mamund: Have you ever been to this type of academic conf before?  Do know what the format of the workshop and tutorial will be like?  
+[00:41] <mamund> i have never been to WWW before. this is all new to me. not my crowd as i'm not an academic...
+[00:42] <mamund> i;m looking forward to it, tho. new territory for me.
+[00:42] <darrelmiller> Me neither.  Once I got out of university, I never looked back.
+[00:42] <darrelmiller> I just hope they have wifi :-)
+[00:42] <mamund> i have two degrees, niether in computers. 
+[00:42] <mamund> hehee
+[00:42] <mamund> yeah. if the hotels are weak, the venue should be fine
+[00:43] <darrelmiller> I hope so.  The last two conferences I went to had no wifi.
+[00:43] <mamund> yuk
+[00:44] <darrelmiller> ...and it is not like I could tether my phone either, it would cost me hundreds of dollars an hour.  Canadian telcos suck.
+[00:44] <mamund> i don't even have a tether for my US Sprint account.
+[00:46] <mamund> mikekelly: are you still submitting a paper to the WS-REST track?
+[00:47] <mamund> anyone else here going/submitting for WWW2010?
+[00:47] <darrelmiller> It was the linked-data workshop that I think Mike was talking about.
+[00:47] <mamund> cool
+[00:49] <algermissen> hmm - seems like I am missing posts - can that be?
+[00:49] <mamund> algermissen: "missing posts" you mean here in the room?
+[00:50] <algermissen> yes. all I see is you (mamund)
+[00:50] <mamund> yeeesh
+[00:50] <mamund> that's bac
+[00:50] <mamund> bad
+[00:50] algermissen (algermiss@p54905732.dip.t-dialin.net) left #rest.
+[00:50] algermissen (~algermiss@p54905732.dip.t-dialin.net) joined #rest.
+[00:50] <mamund> darrelmiller: you still there?
+[00:50] <algermissen> so - lets see what happens
+[00:51] <mamund> k
+[00:52] <mamund> well, no one it talking now!
+[00:52] <mamund> ('cept me, of couse)
+[00:52] <algermissen> Anyway - did some PUT /glass <wine/>  -> 280 Enjoy   and will take another 30min to think about your trans. states. 
+[00:52] <mamund> hehehe
+[00:53] <mamund> you're a pip
+[00:53] <darrelmiller> mamund:   Had to disappear for sec.  I'm back.
+[00:53] <mamund> np
+[00:53] <mamund> algermissen is testing his session
+[00:53] <darrelmiller> GET /Beer
+[00:53] <mamund> algermissen: you see darrelmiller posts now?
+[00:53] <algermissen> no...
+[00:54] <algermissen> crap
+[00:54] <mamund> huh
+[00:54] <algermissen> ah - i can set individ. members to "Ignore" and that must have happened
+[00:54] <mamund> ohhh
+[00:54] <darrelmiller> Back to steady state.
+[00:54] <mamund> what client are you using
+[00:54] <mamund> hehe
+[00:55] <algermissen> yeah - if you do stupid things you will get stupid results
+[00:55] <algermissen> Colloquy on Mac
+[00:55] <mamund> channeling RTF again
+[00:55] <mamund> ok
+[00:55] <mamund> don't know it
+[00:55] <algermissen> maybe we can invite hime to the chat for two hours or so...hmm
+[00:56] <mamund> sheesh, would be cool
+[00:56] <mamund> i shell in
+[00:56] <mamund> windoze at work, linux at home
+[00:56] <algermissen> ???
+[00:56] <algermissen> shell in?
+[00:56] <algermissen> ah - via shell?
+[00:57] <mamund> yeah. ssh into nullshells.net they let me run a screen session so i never really log off
+[00:57] <mamund> keeps the CIA on their toes, too
+[00:57] <algermissen> :-)
+[00:59] <mamund> w/ my library checkouts as well as my internet use, the US security folks must surely be keeping at close eye on me<g>
+[01:01] <darrelmiller> mamund:  I thought that was funny that you had done a post on JSON -> XML and I did one on XML-> JSON.  I had not seen yours prior.
+[01:03] <algermissen> here is one Q to chew on: URIs identify resources, GET on resources puts client into steady state, steady state thus 'has' that URI. I can use that uri to go back to *that* state.
+[01:03] <algermissen> but state can change over time!
+[01:03] <algermissen> so what doe sthe uri refer to? the concept of some app state that can take several forms overtime?
+[01:04] <mamund> darrelmiller: yeah, i thought you'd appreciate the irony<g>.
+[01:04] <algermissen> when I GET uri I wantto get back into that state - but 'that state' does not mean 'that state at 8pm'
+[01:04] <darrelmiller> I see it as when you do a GET on a URI you retrieve resource state and it becomes part of the client's application state.
+[01:05] <algermissen> yes
+[01:05] <darrelmiller> at that point the resource state and the snapshot that is now part of the client's application state can diverge over time
+[01:06] <algermissen> see how again the temporal dimension is right there in REST at the core?
+[01:06] <mamund> algermissen: resolution of the URI is definitely temporally dependent. 
+[01:06] <algermissen> uris refer to some resources that exist to put client in some state
+[01:07] <algermissen> and it is inhernet and fine that that state can change over time
+[01:07] <algermissen> "resource is a time varying membership function that...|"
+[01:08] <mamund> GET /current-time
+[01:09] <darrelmiller> I was working on a REST client the other day and I decided to make a distinction between two ways that I could use a URI.  I could either Navigate To a URI in which case the current client state is completely replaced by the new representation, or I Aggregate a URI where I retrieve a representation that is added to my current application state.  e.g. Images, stylesheets, 
+[01:10] <mamund> darrelmiller: navigate vs. embed links
+[01:10] <darrelmiller> Not sure if I am re-inventing terminology that already exists but it made things clearer for me.
+[01:11] <darrelmiller> Does any media type other than html make this distinction with links?  Does atom?
+[01:11] <algermissen> IMO the principle is to split steady state in parts if the parts have different volatility
+[01:11] <algermissen> -> caching
+[01:11] <darrelmiller> algermissen:  I think what you trying to say is it is all about caching  :-)
+[01:11] <algermissen> oh - and if the parts are reusable
+[01:11] <darrelmiller> You were to fast for me
+[01:12] <mikekelly> it's just resource identification and granularity
+[01:13] <darrelmiller> Has anyone tried applying the terminology of Domain Driven Design to resource identification.  Eg, Aggregate roots, entities and value objects?
+[01:13] <algermissen> yes - it is a good fit
+[01:13] <mamund> darrelmiller: DDD -> resources. interesting idea
+[01:13] <mamund> hmmm. i know very little of the DDD space. 
+[01:14] <darrelmiller> Currently I am trying to use the notions to help me design my URI space.  
+[01:15] <algermissen> For me I like the question: "What is the significance of exposing resource X?"
+[01:15] <algermissen> IOW, start with no resources (== no possible communication, no app state)
+[01:15] <algermissen> then ask what is gained by adding which resource
+[01:16] <algermissen> IOW, how do you justify the exposure of a given resource? What is the client enabled to do by being able to see it
+[01:16] <algermissen> phew
+[01:16] <mamund> hmm...
+[01:16] <algermissen> BTW, this is recorded, yes? Tons of god stuff in here today
+[01:17] <mamund> akgermissen: state transition design. not URI, not resource, not even representation.
+[01:17] <darrelmiller> algermissen:  Do you see resources as a point of interaction with the user , i.e. exposing a "use-case" or do you see it more from a domain model concept?
+[01:18] <mamund> algermissen: http://rest.hackyhack.net/13Feb2010.html lags about five mins, but it
+[01:18] <mamund> is all there
+[01:19] <algermissen> Well, service design is all about deciding which resources to provide and what representations to send. So, I like to ask stuff like this:
+[01:19] <algermissen> what if we have no resource (ideal because we have zero coupling)
+[01:20] <algermissen> the: which resource should I add? Why do I want to put a client in this or that app state?
+[01:20] <darrelmiller> i.e. is Login a valid resource? 
+[01:20] <algermissen> The service design activity centers aropund the question into what app state you dissect your application
+[01:21] <algermissen> login -> HTTP auth
+[01:21] <darrelmiller> Where Login returns a form asking for credentiials.
+[01:21] <algermissen> nah - that is HTTP issue
+[01:21] <algermissen> IOW, can be handled without media type semantiocs
+[01:21] <darrelmiller> Ok, yes forgetting authentication issues.  I'm just using it as a interaction entity
+[01:21] <algermissen> ah
+[01:22] <darrelmiller> Let me think of a better example....
+[01:22] <algermissen> Brainstroming: what if you expose the complete app state (== all of the app) as a single resource?
+[01:23] <mamund> altermissen: "...complete app state..." this is a key idea. 
+[01:23] <mamund> if the entire app state is small, why break it into units?
+[01:23] <algermissen> yes - why?
+[01:23] <mamund> if the app state is large, where do the breaks occur?
+[01:24] <algermissen> yes, you are with me
+[01:24] <mamund> reality is that apps have a very complex state (the app, mind you)
+[01:24] <darrelmiller> Ok.  I could imagine a password minder where you retrieved your complete set of passwords in a single encrypted document.  The client updates it and does a PUT.
+[01:24] <mamund> so it makes sense to shield the client from details that are not pertient to the current interaction...
+[01:24] <mamund> this is, IMO, the essence of app design for wide-area network apps.
+[01:25] <algermissen> yes -> communicating processes
+[01:25] <mamund> keeping in mind that each interaction should be self-descriptive, self-contained, context-free...
+[01:25] <algermissen> issue is to achieve coordination (== a state where both processes know their state machines are aligned)
+[01:26] <mamund> interaction design amounts to only sharing state details needed to complete a desired interaction - steady-state[1] -> steady-state[2]
+[01:26] <algermissen> updating a certain portion of the app data(!) on the server is a form of coordination (-> PUT passwords)
+[01:27] <mamund> yes, "updating a certian portion of the app data" that's when it makes sense to not share the entire state graph w/ the client
+[01:28] <algermissen> but minimizing state circumference is not goal of rest - so how do we derive the desired granularity
+[01:28] <algermissen> ah - balance between number of messages and message size
+[01:29] <mamund> chatty vs. large-grained.
+[01:29] <mikekelly> by not confusing resource state with application state
+[01:29] <mamund> ahhh
+[01:29] <algermissen> this also touches BPM
+[01:29] <darrelmiller> mikekelly: Shouldn't you be sleeping :)
+[01:29] <mamund> by not requiring app state and resource state to match
+[01:29] <mamund> hehehe
+[01:29] <mikekelly> I should yeah
+[01:30] <mikekelly> :-)
+[01:30] <mikekelly> sorry
+[01:30] <mamund> LOL
+[01:30] <mikekelly> :D
+[01:30] <mamund> mikekelly: see you in Raleigh in April?
+[01:30] <mikekelly> potentially
+[01:30] <mamund> very good
+[01:31] <algermissen> BPM -> the temporal aspects of the domain might require to do 'updates' in different steps (at different times)
+[01:31] <algermissen> geee - much stuff to untangle in this area.
+[01:32] <mamund> well, i'm about outta gas here....
+[01:32] <algermissen> i guess, I shuold go now - 8am is get-up time
+[01:32] <mamund> hehehe
+[01:32] <mamund> later, folks
+[01:32] <darrelmiller> bye!
+[01:33] <algermissen> and thanks - that was very valuable
+[01:33] <mamund> peace-out!
+[01:33] <darrelmiller> Enjoyed by all, I'm sure.
+[01:33] <mikekelly> tataa
+[01:33] Action: mamund closes up shop and heads out the door
+[01:40] <mikekelly> hmm
+[01:40] <mikekelly> ETags and server negotiation
+[01:41] <mikekelly> if I have two representations at a URI served via server conneg
+[01:42] <mikekelly> and ETag's against them
+[01:43] <mikekelly> actually nvm I just answered this in my own head
+[01:43] <mikekelly> I need to go to bed :)
+[01:44] <mikekelly> that's interesting though - any server side conneg logic would need to be layered up on top of any ETag/validation logic
+[01:57] darrelmiller (~chatzilla@bas4-montreal45-1279574616.dsl.bell.ca) left irc: Quit: ChatZilla 0.9.86 [Firefox 3.6/20100115144158]
+[02:04] algermissen (~algermiss@p54905732.dip.t-dialin.net) left irc: Quit: RESTing
+[03:11] KevBurnsJr (~kevburnsj@c-67-161-65-81.hsd1.ca.comcast.net) left irc: 
+[05:01] KevBurnsJr (KevBurnsJr@c-69-181-187-21.hsd1.ca.comcast.net) joined #rest.
+[05:09] <KevBurnsJr> POST /drinks <wine color="red"/> 202 Accepted Location: /drinks/1
