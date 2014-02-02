@@ -37,26 +37,12 @@ class LogFormatTiarra extends LogFormat
 
         $line = htmlspecialchars($line, ENT_QUOTES, 'UTF-8');
 
-        if (preg_match("/^[^\s]+ Action: ([^\s]+)/", $line, $m)) {
-            $line = substr($line, 0, 8) . substr($line, 16);
-            $line_classes[] = 'action';
-            $line_classes[] = 'user-' . $m[1];
-        }
-        if (preg_match("/^[^\s]+ Nick change: ([^\s]+) -&gt; ([^\s]+)$/", $line, $m)) {
-            $line = substr($line, 0, 8) . substr($line, 21);
-            $line_classes[] = 'nickchange';
-            $line_classes[] = 'user-' . $m[2];
-        } elseif (preg_match("/ ([^\s]+) ([^\s]+) joined #{$channel}\.$/", $line, $m)) {
+        if (preg_match("/^[^\s]+ \+ ([^\s]+) /", $line, $m)) {
             $line_classes[] = 'join';
             $line_classes[] = 'user-' . $m[1];
-        } elseif (preg_match("/ mode change /", $line)) {
-            $line_classes[] = 'mode';
-        } elseif (preg_match("/ ([^\s]+) ([^\s]+) left #{$channel}\.$/", $line, $m)) {
+        } elseif (preg_match("/^[^\s]+ (\-|!) ([^\s]+) /", $line, $m)) {
             $line_classes[] = 'left';
-            $line_classes[] = 'user-' . $m[1];
-        } elseif (preg_match("/ ([^\s]+) ([^\s]+) left irc: /", $line, $m)) {
-            $line_classes[] = 'left';
-            $line_classes[] = 'user-' . $m[1];
+            $line_classes[] = 'user-' . $m[2];
         } else {
             $line = $this->linkifyText($line);
             if (preg_match("/^([^\s]+) &lt;([^\s]+)&gt; (.*)$/", $line, $m)) {
