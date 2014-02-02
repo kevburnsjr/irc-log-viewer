@@ -9,6 +9,7 @@ class LogFormatTiarra extends LogFormat
     {
         $date = str_replace('-', '.', $date);
         $filename = $this->logPrefix . $date . '.txt';
+
         return $filename;
     }
 
@@ -25,6 +26,7 @@ class LogFormatTiarra extends LogFormat
     {
         $filedate = substr($filename, 0, 10);
         $filedate = str_replace('.', '-', $filedate);
+
         return $filedate;
     }
 

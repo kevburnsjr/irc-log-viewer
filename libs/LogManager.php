@@ -6,17 +6,17 @@ class LogManager
      * @var string
      */
     protected $logDir;
-    
+
     /**
-     * @var object
+     * @var LogFormat
      */
     protected $logFormat;
-    
+
     /**
      * @var array
      */
     protected $logFileList = array();
-    
+
     /**
      * @var int
      */
@@ -26,7 +26,7 @@ class LogManager
     {
         $this->logDir = $logDir;
         $this->logFormat = $logFormat;
-        
+
         $this->createLogFileList();
     }
 
@@ -53,6 +53,7 @@ class LogManager
     public function getDateFromLogFileName($filename)
     {
         $date = $this->logFormat->logFileNameToDate($filename);
+
         return $date;
     }
 
@@ -77,6 +78,7 @@ class LogManager
                 break;
             }
         }
+
         return array($prev, $next);
     }
 

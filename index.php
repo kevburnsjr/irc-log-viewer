@@ -26,7 +26,7 @@ $baseurl = "http://".$host."/";
 
 // Parse URL
 $uri = $_SERVER['REQUEST_URI'];
-$valid_formats = array("html","txt");
+$valid_formats = array("html", "txt");
 $uri_match_date = preg_match("/^.*\/([\d]{4}-[\d]{2}-[\d]{2})\.([a-zA-Z0-9_-]+)$/", $uri, $m);
 $uri_match_index = preg_match("/.*^\/index\.([a-zA-Z0-9_-]+)$/", $uri);
 $date = $uri_match_date ? $m[1] : date('Y-m-d');

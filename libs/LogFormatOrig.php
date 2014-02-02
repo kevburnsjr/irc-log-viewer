@@ -8,6 +8,7 @@ class LogFormatOrig extends LogFormat
     public function getLogFileNameFromDate($date)
     {
         $filename = $this->logPrefix . '.log.' . $date;
+
         return $filename;
     }
 
@@ -23,6 +24,7 @@ class LogFormatOrig extends LogFormat
     public function logFileNameToDate($filename)
     {
         $filedate = substr($filename, strlen($this->logPrefix)+5);
+
         return $filedate;
     }
 
