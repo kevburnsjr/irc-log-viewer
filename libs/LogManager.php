@@ -45,11 +45,21 @@ class LogManager
         $this->maxFileSize = $maxsize;
     }
 
+    /**
+     * 
+     * @param string $date Date (YYYY-MM-DD)
+     * @return string Log filename full path
+     */
     public function getLogFileNameFromDate($date)
     {
         return $this->logDir . '/' . $this->logFormat->getLogFileNameFromDate($date);
     }
 
+    /**
+     * 
+     * @param string $filename
+     * @return string Date (YYYY-MM-DD)
+     */
     public function getDateFromLogFileName($filename)
     {
         $date = $this->logFormat->logFileNameToDate($filename);
@@ -85,5 +95,18 @@ class LogManager
     public function lineAsHtml($line, $i, $channel)
     {
         return $this->logFormat->lineAsHtml($line, $i, $channel);
+    }
+
+    /**
+     * 
+     * @param string $date Date (YYYY-MM-DD)
+     * @return array Lines of a log file
+     */
+    public function getLogFileLinesFromDate($date)
+    {
+        $filename = $this->getLogFileNameFromDate($date);
+        $lines = file_exists($filename) ? file($filename) : null;
+        
+        return $lines;
     }
 }

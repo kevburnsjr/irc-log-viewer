@@ -1,8 +1,8 @@
 <?php
 
 ini_set('default_charset', 'UTF-8');
-mb_language('ja');
-mb_internal_encoding('UTF-8');
+//mb_language('ja');
+//mb_internal_encoding('UTF-8');
 //setlocale(LC_ALL, 'ja_JP.UTF-8');
 
 require __DIR__.'/libs/autoloader.php';
@@ -17,7 +17,7 @@ $channel = getenv('APP_CHANNEL') ? getenv('APP_CHANNEL') : "rest";
 $network = getenv('APP_NETWORK') ? getenv('APP_NETWORK') : "irc.freenode.net";
 $logdir  = getenv('APP_LOGDIR')  ? getenv('APP_LOGDIR')  : dirname(__FILE__)."/sample-logs";
 $gacoe   = getenv('APP_GACODE');
-//var_dump($host, $channel, $network, $logdir); exit;
+//var_dump($host, $channel, $network, $logdir, $gacoe); exit;
 
 $title = "#{$channel} on {$network}";
 $subtitle = "";
@@ -31,7 +31,7 @@ $uri_match_date = preg_match("/^.*\/([\d]{4}-[\d]{2}-[\d]{2})\.([a-zA-Z0-9_-]+)$
 $uri_match_index = preg_match("/.*^\/index\.([a-zA-Z0-9_-]+)$/", $uri);
 $date = $uri_match_date ? $m[1] : date('Y-m-d');
 $format = $uri_match_date && in_array($m[2], $valid_formats) ? $m[2] : "html";
-//var_dump($uri, $uri_match_date, $uri_match_index, $format); exit;
+//var_dump($uri, $uri_match_date, $uri_match_index, $date, $format); exit;
 
 // for Original sample logs
 $logFormat = new LogFormatOrig($channel);
@@ -43,8 +43,7 @@ $logManager = new LogManager($logdir, $logFormat);
 // Load log file for given date
 $lines = array();
 if ($date && preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $date)) {
-    $filename = $logManager->getLogFileNameFromDate($date);
-    $lines = file_exists($filename) ? file($filename) : null;
+    $lines = $logManager->getLogFileLinesFromDate($date);
     $subtitle = " ".$date;
 }
 
