@@ -7,8 +7,9 @@ class FunctionalTest extends PHPUnit_Framework_TestCase
     public function test_index_html()
     {
         $test = file_get_contents(static::BASEURL . 'index.html');
-        $expected = file_get_contents(__DIR__.'/html/index.html');
-        $this->assertEquals($expected, $test);
+        $regex = preg_quote(file_get_contents(__DIR__.'/html/index.html'), '/');
+        $regex = str_replace('2014\-02\-02', '\d\d\d\d\-\d\d\-\d\d', $regex);
+        $this->assertRegExp('/'.$regex.'/u', $test);
     }
 
     public function test_2010_02_13_html()
