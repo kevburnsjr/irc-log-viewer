@@ -33,6 +33,7 @@ class LogManager
     protected function createLogFileList()
     {
         $maxsize = 0;
+        $files = array();
         $allFiles = array_reverse(array_slice(scandir($this->logDir), 2));
         foreach ($allFiles as $file) {
             if ($this->logFormat->isValidLogFilename($file)) {
