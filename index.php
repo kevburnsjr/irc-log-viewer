@@ -51,7 +51,7 @@ if ($format == "txt") {
     header("Content-Type: text/plain");
     if (count($lines)) {
         header("HTTP/1.0 200 Okay");
-        include 'views/date.txt.php';
+        require __DIR__.'/views/date.txt.php';
     } else {
         header("HTTP/1.0 404 Not Found");
         echo "Log file for {$date} not found.";

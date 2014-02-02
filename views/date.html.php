@@ -1,5 +1,5 @@
 <?php
-    include 'header.html.php';
+    require 'header.html.php';
 
     list($prev, $next) = $logManager->getPrevNextDate($date);
 ?>
