@@ -5,11 +5,8 @@ mb_language('ja');
 mb_internal_encoding('UTF-8');
 //setlocale(LC_ALL, 'ja_JP.UTF-8');
 
-require './libs/LogFile.php';
-require './libs/LogManager.php';
-require './libs/LogFormat.php';
-require './libs/LogFormatOrig.php';
-require './libs/LogFormatTiarra.php';
+require __DIR__.'/libs/autoloader.php';
+spl_autoload_register('autoloader');
 
 // SetEnv APP_CHANNEL rest
 // SetEnv APP_NETWORK irc.freenode.net
