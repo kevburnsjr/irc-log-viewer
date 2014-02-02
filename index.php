@@ -61,12 +61,12 @@ if ($format == "txt") {
     header("Content-Type: text/html");
     if ($uri_match_date && count($lines)) {
         header("HTTP/1.0 200 Okay");
-        require 'views/date.html.php';
+        require __DIR__.'/views/date.html.php';
     } elseif ($uri_match_index) {
         header("HTTP/1.0 200 Okay");
-        require 'views/index.html.php';
+        require __DIR__.'/views/index.html.php';
     } else {
         header("HTTP/1.0 404 Not Found");
-        require 'views/index.html.php';
+        require __DIR__.'/views/index.html.php';
     }
 }
